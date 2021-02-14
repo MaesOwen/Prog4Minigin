@@ -338,3 +338,9 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
+# don't ignore the 3rd party folder
+!3rdParty/*
+!3rdParty/SDL2/lib/*
+!3rdParty/SDL2_image/lib/*
+!3rdParty/SDL2_ttf_lib/*
