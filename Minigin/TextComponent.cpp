@@ -30,8 +30,9 @@ void dae::TextComponent::Update()
 
 void dae::TextComponent::Render() const
 {
-	if (m_pTexture != nullptr)
+	if (m_pTexture != nullptr) 
 	{
+		//get rendercomponent
 		const auto pos = m_Transform.GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}

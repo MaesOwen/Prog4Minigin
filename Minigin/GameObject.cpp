@@ -2,70 +2,57 @@
 #include "GameObject.h"
 #include "ResourceManager.h"
 #include "Renderer.h"
+#include "Component.h"
+#include "TransformComponent.h"
 
-dae::GameObject::GameObject(std::shared_ptr<RenderComponent>& pRenderComponent, std::shared_ptr<TextComponent>& pTextComponent, std::shared_ptr<FPSComponent>& pFpsComponent)
-	:m_pRenderComponent(pRenderComponent)
-	,m_pTextComponent(pTextComponent)
-	,m_pFPSComponent(pFpsComponent)
+
+dae::GameObject::GameObject()
 {
+	AddComponent(std::make_shared<TransformComponent>());
 }
-
-dae::GameObject::GameObject(std::shared_ptr<RenderComponent>& pRenderComponent)
-	:m_pRenderComponent(pRenderComponent)
-{
-}
-
-dae::GameObject::GameObject(std::shared_ptr<TextComponent>& pTextComponent)
-	:m_pTextComponent(pTextComponent)
-{
-}
-
-dae::GameObject::GameObject(std::shared_ptr<FPSComponent>& pFpsComponent)
-	:m_pFPSComponent(pFpsComponent)
-{
-}
-
 
 dae::GameObject::~GameObject() = default;
 
+dae::GameObject::GameObject(const GameObject & other)
+{
+	std::copy(other.m_pComponents.begin(), other.m_pComponents.end(), std::back_inserter(m_pComponents));
+}
+
+
 void dae::GameObject::Update()
 {
-	if (m_pFPSComponent != nullptr)
+	for (auto& pComponent: m_pComponents)
 	{
-		m_pFPSComponent->Update();
-	}
-	if (m_pTextComponent != nullptr)
-	{
-		m_pTextComponent->Update();
+		pComponent->Update();
 	}
 }
 
 void dae::GameObject::Render() const
 {
-	if (m_pRenderComponent != nullptr)
+	for (auto& pComponent : m_pComponents)
 	{
-		m_pRenderComponent->Render(m_Transform);
-	}
-	if (m_pTextComponent != nullptr)
-	{
-		m_pTextComponent->Render();
-	}
-	if (m_pFPSComponent != nullptr)
-	{
-		m_pFPSComponent->Render();
-	}
-	
-}
-
-void dae::GameObject::SetTexture(const std::string& filename)
-{
-	if (m_pRenderComponent != nullptr)
-	{
-		m_pRenderComponent->SetTexture(filename);
+		pComponent->Render();
 	}
 }
 
-void dae::GameObject::SetPosition(float x, float y)
+void dae::GameObject::SetPosition(const float x, const float y, const float z)
 {
-	m_Transform.SetPosition(x, y, 0.0f);
+	std::shared_ptr<TransformComponent> pTransform = GetTransformComponent();
+	if (pTransform != nullptr)
+	{
+		pTransform->SetPosition(x, y, z);
+	}
+}
+
+std::shared_ptr<dae::TransformComponent> dae::GameObject::GetTransformComponent() const
+{
+	return std::dynamic_pointer_cast<TransformComponent>(m_pComponents.back());
+}
+
+
+
+void dae::GameObject::AddComponent(std::shared_ptr<Component> pComponent)
+{
+	pComponent->SetOwner(std::make_shared<GameObject>(*this));
+	m_pComponents.push_front(pComponent);	
 }

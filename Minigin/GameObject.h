@@ -1,39 +1,48 @@
 #pragma once
+
+#include <deque>
+
 #include "Transform.h"
 #include "SceneObject.h"
-#include "RenderComponent.h"
-#include "TextComponent.h"
-#include "FPSComponent.h"
 
 namespace dae
 {
+	class Component;
 	class Texture2D;
+	class TransformComponent;
 	class GameObject final: public SceneObject
 	{
 	public:
 		void Update() override;
 		void Render() const override;
+		void SetPosition(const float x, const float y, const float z);
+		std::shared_ptr<TransformComponent> GetTransformComponent() const;
+		void AddComponent(std::shared_ptr<Component> pComponent);
+		/*template <typename T>
+		std::shared_ptr<T> GetComponent()
+		{
+		//std::shared_ptr<B> bp = std::dynamic_pointer_cast<B>(ap);
+			for (auto& pComponent: m_pComponents)
+			{
+				if (dynamic_cast<std::shared_ptr<T>>(pComponent))
+				{
+					return (std::shared_ptr<T>)pComponent;
+				}
+			}
+			return nullptr;
+		};*/
 
-		void SetTexture(const std::string& filename);
-		void SetPosition(float x, float y);
-
-		GameObject(std::shared_ptr<RenderComponent>& pRenderComponent, std::shared_ptr<TextComponent>& pTextComponent, std::shared_ptr<FPSComponent>& pFpsComponent);
-		GameObject(std::shared_ptr<RenderComponent>& pRenderComponent);
-		GameObject(std::shared_ptr<TextComponent>& pTextComponent);
-		GameObject(std::shared_ptr<FPSComponent>& pFpsComponent);
-		//TODO: Make all the components derive from a component class ??
 		
+
+		GameObject();
 		virtual ~GameObject();
-		GameObject(const GameObject& other) = delete;
+		GameObject(const GameObject& other);
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
-		Transform m_Transform;
-		//TODO: Make a container of components?
-		std::shared_ptr<RenderComponent> m_pRenderComponent;
-		std::shared_ptr<TextComponent> m_pTextComponent;
-		std::shared_ptr<FPSComponent> m_pFPSComponent;
+		//std::shared_ptr<TransformComponent> m_pTransformComponent; //todo: push components in front, transform always at the back (deque)
+		std::deque<std::shared_ptr<Component>> m_pComponents; 
 	};
 }
