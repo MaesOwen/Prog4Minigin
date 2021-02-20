@@ -1,28 +1,41 @@
 #include "MiniginPCH.h"
 #include "FPSComponent.h"
 
+
+#include "GameObject.h"
 #include "TextComponent.h"
 #include "Time.h"
 
-dae::FPSComponent::FPSComponent(const std::shared_ptr<TextComponent>& pTextComponent)
-	:m_pTextComponent(pTextComponent)
-{
-}
-
 void dae::FPSComponent::Update()
 {
-	if (m_pTextComponent != nullptr)
+	const float deltaTime = Time::GetInstance().GetDeltaTime();
+	m_ElapsedTime += deltaTime;
+	m_AverageDeltaTime += deltaTime;
+	m_AverageDeltaTime /= 2.f;
+	
+	if (m_ElapsedTime > m_FPSIntervalSeconds)
 	{
-		m_pTextComponent->SetText(std::to_string(int(m_Second / Time::GetInstance().GetDeltaTime())) + " FPS");
-		m_pTextComponent->Update();
+		if (m_pTextComponent != nullptr)
+		{
+			m_pTextComponent->SetText(std::to_string(int(m_Second / m_AverageDeltaTime)) + " FPS");
+		}
+		m_AverageDeltaTime = 0.f;
+		m_ElapsedTime -= m_FPSIntervalSeconds;
 	}
+	
 }
 
 void dae::FPSComponent::Render() const
 {
-	if (m_pTextComponent != nullptr)
+}
+
+void dae::FPSComponent::SetOwner(std::shared_ptr<GameObject> pOwner)
+{
+	m_pOwner = pOwner;
+	std::shared_ptr<TextComponent> possibleTextComponent = pOwner->GetComponent<TextComponent>();
+	if (possibleTextComponent != nullptr)
 	{
-		m_pTextComponent->Render();
+		m_pTextComponent = possibleTextComponent;
 	}
 }
 

@@ -18,19 +18,20 @@ namespace dae
 		void SetPosition(const float x, const float y, const float z);
 		std::shared_ptr<TransformComponent> GetTransformComponent() const;
 		void AddComponent(std::shared_ptr<Component> pComponent);
-		/*template <typename T>
+		
+		template <typename T>
 		std::shared_ptr<T> GetComponent()
 		{
-		//std::shared_ptr<B> bp = std::dynamic_pointer_cast<B>(ap);
 			for (auto& pComponent: m_pComponents)
 			{
-				if (dynamic_cast<std::shared_ptr<T>>(pComponent))
+				//std::dynamic_pointer_cast<std::shared_ptr<T>>(pComponent)
+				if (dynamic_cast<T*>(pComponent.get()))
 				{
-					return (std::shared_ptr<T>)pComponent;
+					return std::dynamic_pointer_cast<T>(pComponent);
 				}
 			}
 			return nullptr;
-		};*/
+		};
 
 		
 

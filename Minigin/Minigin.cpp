@@ -7,11 +7,14 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
+
+#include "FPSComponent.h"
 #include "TextObject.h"
 #include "GameObject.h"
 #include "Scene.h"
 #include "Time.h"
 #include "RenderComponent.h"
+#include "TextComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -49,31 +52,41 @@ void dae::Minigin::LoadGame() const
 	auto go = std::make_shared<GameObject>();
 	auto rc = std::make_shared<RenderComponent>();
 	go->AddComponent(rc);
-	rc->SetTexture("background.jpg");
+	//rc->SetTexture("background.jpg");
+	go->GetComponent<RenderComponent>()->SetTexture("background.jpg");
 	scene.Add(go);
 
 	go = std::make_shared<GameObject>();
 	rc = std::make_shared<RenderComponent>();
 	go->AddComponent(rc);
-	rc->SetTexture("logo.png");
+	go->GetComponent<RenderComponent>()->SetTexture("logo.png");
+	//rc->SetTexture("logo.png");
 	go->SetPosition(216, 180, 0.f);
 	scene.Add(go);
 
 	
-	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	//auto tc = std::make_shared<TextComponent>("Programming 4 Assignment", font);
-	////auto to = std::make_shared<TextObject>("Programming 4 Assignment", font);
-	//tc->SetPosition(80, 20);
-	//go = std::make_shared<GameObject>(tc);
-	//scene.Add(go);
+	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	auto tc = std::make_shared<TextComponent>("Programming 4 Assignment", font);
+	go = std::make_shared<GameObject>();
+	go->AddComponent(tc);
+	go->GetComponent<TextComponent>()->SetPosition(80, 20);
+	scene.Add(go);
 
-	//font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
-	//tc = std::make_shared<TextComponent>("55 FPS", font);
-	//tc->SetTextColor(255, 255, 0);
-	//tc->SetPosition(5, 5);
-	//auto fc = std::make_shared<FPSComponent>(tc);
-	//go = std::make_shared<GameObject>(fc);
-	//scene.Add(go);
+	font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 18);
+	tc = std::make_shared<TextComponent>("55 FPS", font);
+	auto fc = std::make_shared<FPSComponent>();
+	go = std::make_shared<GameObject>();
+	go->AddComponent(tc);
+	go->AddComponent(fc);
+	std::shared_ptr<TextComponent> textComp = go->GetComponent<TextComponent>();
+	if (textComp)
+	{
+		textComp->SetTextColor(255, 255, 0);
+		textComp->SetPosition(5, 5);
+	}
+	
+	
+	scene.Add(go);
 }
 
 void dae::Minigin::Cleanup()
@@ -97,28 +110,23 @@ void dae::Minigin::Run()
 		auto& renderer = Renderer::GetInstance();
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
-		auto& timer = Time::GetInstance();
 
 		bool doContinue = true;
-		timer.Start();
-		
-		double lag = 0.0;
-		
+
+		auto lastTime = high_resolution_clock::now();
 		while (doContinue)
 		{
-			lag += timer.GetDeltaTime(); 
+			const auto currentTime = high_resolution_clock::now();
+			Time::GetInstance().SetDeltaTime(std::chrono::duration<float>(currentTime - lastTime).count());
 			
 			doContinue = input.ProcessInput();
-
-			while (lag >= MsPerFrame)
-			{
-				sceneManager.Update();
-				lag -= MsPerFrame;
-			}
-			
+			sceneManager.Update();
 			renderer.Render();
 
-			timer.Reset();
+			lastTime = currentTime;
+			
+			const auto sleepTime = lastTime + milliseconds(MsPerFrame) - high_resolution_clock::now();
+			this_thread::sleep_for(sleepTime);
 		}
 	}
 

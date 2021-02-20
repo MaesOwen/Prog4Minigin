@@ -1,15 +1,17 @@
 #pragma once
 #include <SDL_pixels.h>
+
+#include "Component.h"
 #include "Transform.h"
 namespace dae
 {
 	class Texture2D;
 	class Font;
-	class TextComponent
+	class TextComponent final: public Component
 	{
 	public:
-		void Update();
-		void Render() const;
+		void Update() override;
+		void Render() const override;
 
 		void SetText(const std::string& text);
 		void SetPosition(float x, float y);

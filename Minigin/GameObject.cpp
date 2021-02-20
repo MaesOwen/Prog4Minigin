@@ -4,6 +4,7 @@
 #include "Renderer.h"
 #include "Component.h"
 #include "TransformComponent.h"
+#include "RenderComponent.h"
 
 
 dae::GameObject::GameObject()
