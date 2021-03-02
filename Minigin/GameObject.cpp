@@ -7,12 +7,16 @@
 #include "RenderComponent.h"
 
 
+void dae::GameObject::AddObserver(std::shared_ptr<Observer> pObserver)
+{
+	m_pObservers.push_back(pObserver);
+}
+
 dae::GameObject::GameObject()
 {
 	AddComponent(std::make_shared<TransformComponent>());
 }
 
-dae::GameObject::~GameObject() = default;
 
 dae::GameObject::GameObject(const GameObject & other)
 {

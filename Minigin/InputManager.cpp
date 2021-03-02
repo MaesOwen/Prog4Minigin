@@ -5,8 +5,13 @@
 
 bool dae::InputManager::ProcessInput()
 {
-	ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
-	XInputGetState(0, &m_CurrentState);
+	DWORD dwResult;
+	for (DWORD i = 0; i < XUSER_MAX_COUNT; i++)
+	{
+		ZeroMemory(&m_CurrentState, sizeof(XINPUT_STATE));
+
+		dwResult = XInputGetState(0, &m_CurrentState);
+	}
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -20,6 +25,10 @@ bool dae::InputManager::ProcessInput()
 			
 		}
 	}
+
+	m_LastState = m_CurrentState;
+
+	
 
 	return true;
 }

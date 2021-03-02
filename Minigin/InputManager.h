@@ -4,6 +4,8 @@
 
 namespace dae
 {
+	class Command;
+
 	enum class ControllerButton
 	{
 		ButtonA,
@@ -19,6 +21,8 @@ namespace dae
 		bool IsPressed(ControllerButton button) const;
 	private:
 		XINPUT_STATE m_CurrentState{};
+		XINPUT_STATE m_LastState{};
+		
 	};
 
 }

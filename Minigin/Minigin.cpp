@@ -11,10 +11,14 @@
 #include "FPSComponent.h"
 #include "TextObject.h"
 #include "GameObject.h"
+#include "Observer.h"
+#include "Qbert.h"
+#include "QbertGameMode.h"
 #include "Scene.h"
 #include "Time.h"
 #include "RenderComponent.h"
 #include "TextComponent.h"
+#include "TransformComponent.h"
 
 using namespace std;
 using namespace std::chrono;
@@ -52,7 +56,6 @@ void dae::Minigin::LoadGame() const
 	auto go = std::make_shared<GameObject>();
 	auto rc = std::make_shared<RenderComponent>();
 	go->AddComponent(rc);
-	//rc->SetTexture("background.jpg");
 	go->GetComponent<RenderComponent>()->SetTexture("background.jpg");
 	scene.Add(go);
 
@@ -60,7 +63,6 @@ void dae::Minigin::LoadGame() const
 	rc = std::make_shared<RenderComponent>();
 	go->AddComponent(rc);
 	go->GetComponent<RenderComponent>()->SetTexture("logo.png");
-	//rc->SetTexture("logo.png");
 	go->SetPosition(216, 180, 0.f);
 	scene.Add(go);
 
@@ -84,9 +86,38 @@ void dae::Minigin::LoadGame() const
 		textComp->SetTextColor(255, 255, 0);
 		textComp->SetPosition(5, 5);
 	}
-	
-	
 	scene.Add(go);
+
+	auto observer = std::make_shared<QbertGameMode>();
+	go = std::make_shared<Qbert>();
+	go->GetTransformComponent()->SetPosition(450, 200.f, 0.f);
+	rc = std::make_shared<RenderComponent>();
+	rc->SetTexture("qbert.png");
+	tc = std::make_shared<TextComponent>("Score: ", font);
+	tc->SetPosition(450, 180);
+	go->AddComponent(rc);
+	go->AddComponent(tc);
+	go->AddObserver(observer);
+	scene.Add(go);
+
+	observer = std::make_shared<QbertGameMode>();
+	auto qb = std::make_shared<Qbert>();
+	qb->GetTransformComponent()->SetPosition(50, 200.f, 0.f);
+	rc = std::make_shared<RenderComponent>();
+	rc->SetTexture("qbert.png");
+	tc = std::make_shared<TextComponent>("Score: ", font);
+	tc->SetPosition(50, 180);
+	qb->AddComponent(rc);
+	qb->AddComponent(tc);
+	qb->AddObserver(observer);
+	qb->SetControls(ControllerButton::ButtonX, ControllerButton::ButtonY);
+	scene.Add(qb);
+
+	
+
+	
+	
+	
 }
 
 void dae::Minigin::Cleanup()

@@ -7,10 +7,11 @@
 
 namespace dae
 {
+	class Observer;
 	class Component;
 	class Texture2D;
 	class TransformComponent;
-	class GameObject final: public SceneObject
+	class GameObject: public SceneObject
 	{
 	public:
 		void Update() override;
@@ -24,7 +25,6 @@ namespace dae
 		{
 			for (auto& pComponent: m_pComponents)
 			{
-				//std::dynamic_pointer_cast<std::shared_ptr<T>>(pComponent)
 				if (dynamic_cast<T*>(pComponent.get()))
 				{
 					return std::dynamic_pointer_cast<T>(pComponent);
@@ -33,17 +33,19 @@ namespace dae
 			return nullptr;
 		};
 
+		void AddObserver(std::shared_ptr<Observer> pObserver);
 		
 
 		GameObject();
-		virtual ~GameObject();
+		virtual ~GameObject() = default;
 		GameObject(const GameObject& other);
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
-
+	protected:
+		std::vector< std::shared_ptr<Observer>> m_pObservers;
 	private:
-		//std::shared_ptr<TransformComponent> m_pTransformComponent; //todo: push components in front, transform always at the back (deque)
-		std::deque<std::shared_ptr<Component>> m_pComponents; 
+		std::deque<std::shared_ptr<Component>> m_pComponents;
+		
 	};
 }
