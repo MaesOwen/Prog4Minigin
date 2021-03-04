@@ -1,33 +1,47 @@
 #include "MiniginPCH.h"
 #include "Qbert.h"
-
-#include "InputManager.h"
-#include "Observer.h"
-
-
-void dae::Qbert::Die()
-{
-	//send event to observer
-	for (std::shared_ptr<Observer> pObserver: m_pObservers)
-	{
-		pObserver->OnNotify(*this, Event::PlayerDied);
-	}
-}
+#include "QbertObserver.h"
 
 void dae::Qbert::Update()
 {
-	GameObject::Update();
-	
-	auto& input = dae::InputManager::GetInstance();
-	if (input.IsPressed(m_DieButton))
+}
+
+void dae::Qbert::Render() const
+{
+}
+
+void dae::Qbert::Die()
+{
+	if (m_Lives > 0)
 	{
-		Die();
+		m_Lives--;
+	}
+	for (std::shared_ptr<QbertObserver> pObserver: m_pObservers)
+	{
+		pObserver->Died();
 	}
 	
 }
 
-void dae::Qbert::SetControls(ControllerButton dieButton, ControllerButton scoreButton)
+void dae::Qbert::ChangeTile()
 {
-	m_DieButton = dieButton;
-	m_ScoreButton = scoreButton;
+	for (std::shared_ptr<QbertObserver> pObserver : m_pObservers)
+	{
+		pObserver->ChangeTile();
+	}
+}
+
+void dae::Qbert::AddObserver(const std::shared_ptr<QbertObserver>& pObserver)
+{
+	m_pObservers.push_back(pObserver);
+}
+
+void dae::Qbert::RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver)
+{
+	m_pObservers.erase(std::remove(m_pObservers.begin(), m_pObservers.end(), pObserver), m_pObservers.end());
+}
+
+int dae::Qbert::GetLives() const
+{
+	return m_Lives;
 }

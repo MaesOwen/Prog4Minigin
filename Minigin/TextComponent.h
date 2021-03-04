@@ -3,6 +3,8 @@
 
 #include "Component.h"
 #include "Transform.h"
+#include "TransformComponent.h"
+
 namespace dae
 {
 	class Texture2D;
@@ -12,6 +14,7 @@ namespace dae
 	public:
 		void Update() override;
 		void Render() const override;
+		void SetOwner(std::shared_ptr<GameObject> pOwner) override;
 
 		void SetText(const std::string& text);
 		void SetPosition(float x, float y);
@@ -27,7 +30,7 @@ namespace dae
 	private:
 		bool m_NeedsUpdate;
 		std::string m_Text;
-		Transform m_Transform;
+		std::shared_ptr<TransformComponent> m_pTransform;
 		std::shared_ptr<Font> m_pFont;
 		std::shared_ptr<Texture2D> m_pTexture;
 		SDL_Color m_TextColor;

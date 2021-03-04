@@ -3,12 +3,10 @@
 
 namespace dae
 {
-	class Die:public dae::Command
+	class ChangeTile: public Command
 	{
 	public:
-		Die(const std::shared_ptr<GameObject>& pGameObject);
+		ChangeTile(const std::shared_ptr<GameObject>& pGameObject);
 		void execute() override;
-
 	};
-	
 }

@@ -7,7 +7,6 @@
 
 namespace dae
 {
-	class Observer;
 	class Component;
 	class Texture2D;
 	class TransformComponent;
@@ -32,8 +31,6 @@ namespace dae
 			}
 			return nullptr;
 		};
-
-		void AddObserver(std::shared_ptr<Observer> pObserver);
 		
 
 		GameObject();
@@ -42,8 +39,7 @@ namespace dae
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
-	protected:
-		std::vector< std::shared_ptr<Observer>> m_pObservers;
+
 	private:
 		std::deque<std::shared_ptr<Component>> m_pComponents;
 		

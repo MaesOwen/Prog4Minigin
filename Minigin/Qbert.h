@@ -1,21 +1,23 @@
 #pragma once
-#include "GameObject.h"
-#include "InputManager.h"
-
+#include "Component.h"
 
 namespace dae
 {
-	enum class ControllerButton;
-
-	class Qbert final : public GameObject
+	class QbertObserver;
+	class Qbert final: public Component
 	{
 	public:
-		void Die();
 		void Update() override;
-		void SetControls(ControllerButton dieButton, ControllerButton scoreButton);
+		void Render() const override;
+		void Die();
+		void ChangeTile();
+		void AddObserver(const std::shared_ptr<QbertObserver>& pObserver);
+		void RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver);
+		int GetLives() const;
+
 	private:
-		ControllerButton m_DieButton = ControllerButton::ButtonA;
-		ControllerButton m_ScoreButton = ControllerButton::ButtonB;
+		int m_Lives{3};
+		std::vector<std::shared_ptr<QbertObserver>> m_pObservers;
 	};
 
 }
