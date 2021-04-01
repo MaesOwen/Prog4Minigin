@@ -1,6 +1,8 @@
 #include "MiniginPCH.h"
 #include "ChangeTile.h"
 
+
+#include "AudioLocator.h"
 #include "GameObject.h"
 #include "Qbert.h"
 
@@ -15,5 +17,6 @@ void dae::ChangeTile::execute()
 	if (qbert)
 	{
 		qbert->ChangeTile();
+		AudioLocator::GetInstance().GetAudioSystem()->Play(0, 1);
 	}
 }

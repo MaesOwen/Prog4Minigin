@@ -40,5 +40,11 @@ void dae::LivesDisplay::ChangeTile()
 
 void dae::LivesDisplay::SetQbert(const std::shared_ptr<Qbert>& pQbert)
 {
+	//m_pPlayer = std::make_shared<Qbert>(*pQbert);
 	m_pPlayer = pQbert;
+}
+
+void dae::LivesDisplay::SetQbert(Qbert* pQbert)
+{
+	m_pPlayer = std::make_shared<Qbert>(*pQbert);
 }

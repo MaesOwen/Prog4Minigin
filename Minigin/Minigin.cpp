@@ -8,12 +8,13 @@
 #include "ResourceManager.h"
 #include <SDL.h>
 
-
-
+#include <SDL.h>
+#include "audio.h"
+#include "AudioLocator.h"
+#include "SDL2AudioSystem.h"
 #include "ChangeTile.h"
 #include "Die.h"
 #include "FPSComponent.h"
-#include "TextObject.h"
 #include "GameObject.h"
 #include "LivesDisplay.h"
 #include "Qbert.h"
@@ -29,7 +30,8 @@ using namespace std::chrono;
 
 void dae::Minigin::Initialize()
 {
-	if (SDL_Init(SDL_INIT_VIDEO) != 0) 
+	_putenv("SDL_AUDIODRIVER=DirectSound");
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0)
 	{
 		throw std::runtime_error(std::string("SDL_Init Error: ") + SDL_GetError());
 	}
@@ -46,8 +48,10 @@ void dae::Minigin::Initialize()
 	{
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
-
+	
 	Renderer::GetInstance().Init(m_Window);
+	
+	//initAudio(); //gives linked error
 }
 
 /**
@@ -55,6 +59,10 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
+	//sound
+	SDL2AudioSystem* pSoundSystem = new SDL2AudioSystem(false);
+	AudioLocator::GetInstance().ProvideAudioSystem(pSoundSystem);
+	
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = std::make_shared<GameObject>();
@@ -92,7 +100,7 @@ void dae::Minigin::LoadGame() const
 		textComp->SetPosition(5, 5);
 	}
 	scene.Add(go);
-
+	
 	//Qbert1
 	auto qbertGO = make_shared<GameObject>();
 	rc = make_shared<RenderComponent>();
@@ -102,7 +110,7 @@ void dae::Minigin::LoadGame() const
 	
 	qbertGO->AddComponent(qb);
 	qbertGO->GetTransformComponent()->SetPosition(50, 200, 0);
-
+	
 	//Lives hud 1
 	auto livesGO = make_shared<GameObject>();
 	livesGO->GetTransformComponent()->SetPosition(50, 250, 0);
@@ -112,7 +120,7 @@ void dae::Minigin::LoadGame() const
 	tc->SetPosition(0, 120);
 	tc->SetTextColor(255, 0, 0);
 	qb->AddObserver(ld);
-	ld->SetQbert(qb);
+	//ld->SetQbert(qb);
 
 	//Score hud1
 	auto scoreGO = make_shared<GameObject>();
@@ -137,8 +145,8 @@ void dae::Minigin::LoadGame() const
 
 	qbertGO2->AddComponent(qb);
 	qbertGO2->GetTransformComponent()->SetPosition(420, 200, 0);
-
-	//Lives hud 1
+	
+	//Lives hud 2
 	 livesGO = make_shared<GameObject>();
 	livesGO->GetTransformComponent()->SetPosition(420, 250, 0);
 	tc = make_shared<TextComponent>("Lives: 3", font);
@@ -147,9 +155,9 @@ void dae::Minigin::LoadGame() const
 	tc->SetPosition(0, 120);
 	tc->SetTextColor(255, 0, 0);
 	qb->AddObserver(ld);
-	ld->SetQbert(qb);
+	//ld->SetQbert(qb);
 
-	//Score hud1
+	//Score hud 2
 	 scoreGO = make_shared<GameObject>();
 	scoreGO->GetTransformComponent()->SetPosition(420, 250, 0);
 	tc = make_shared<TextComponent>("Score: 0", font);
@@ -162,14 +170,20 @@ void dae::Minigin::LoadGame() const
 	scene.Add(qbertGO2);
 	scene.Add(livesGO);
 	scene.Add(scoreGO);
-
-	//input
-	InputManager::GetInstance().BindControl(ControllerButton::ButtonA, make_shared<Die>(qbertGO));
-	InputManager::GetInstance().BindControl(ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
-	InputManager::GetInstance().BindControl(ControllerButton::ButtonX, make_shared<Die>(qbertGO2));
-	InputManager::GetInstance().BindControl(ControllerButton::ButtonY, make_shared<ChangeTile>(qbertGO2));
 	
+	//input
+	InputManager::GetInstance().BindControl("PointsPlayer1", "W", ControllerButton::ButtonA, make_shared<Die>(qbertGO));
+	InputManager::GetInstance().BindControl("DeadPlayer1", "S", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
+	InputManager::GetInstance().BindControl("PointsPlayer2", "E", ControllerButton::ButtonX, make_shared<Die>(qbertGO2));
+	InputManager::GetInstance().BindControl("DeadPlayer2", "D", ControllerButton::ButtonY, make_shared<ChangeTile>(qbertGO2));
 
+	//ShowControls
+	InputManager::GetInstance().PrintControls();
+
+	//Sound
+	AudioLocator::GetInstance().GetAudioSystem()->Load("points.wav");
+	
+	
 	
 	
 	
@@ -178,6 +192,7 @@ void dae::Minigin::LoadGame() const
 void dae::Minigin::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
+	AudioLocator::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
 	SDL_Quit();

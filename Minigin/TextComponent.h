@@ -2,7 +2,6 @@
 #include <SDL_pixels.h>
 
 #include "Component.h"
-#include "Transform.h"
 #include "TransformComponent.h"
 
 namespace dae

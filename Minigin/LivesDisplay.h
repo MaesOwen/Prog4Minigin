@@ -18,6 +18,7 @@ namespace dae
 		void Died() override;
 		void ChangeTile() override;
 		void SetQbert(const std::shared_ptr<Qbert>& pQbert);
+		void SetQbert(Qbert* pQbert);
 
 	private:
 		std::shared_ptr<TextComponent> m_pText;

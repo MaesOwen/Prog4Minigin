@@ -34,6 +34,7 @@ void dae::Qbert::ChangeTile()
 void dae::Qbert::AddObserver(const std::shared_ptr<QbertObserver>& pObserver)
 {
 	m_pObservers.push_back(pObserver);
+	
 }
 
 void dae::Qbert::RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver)
@@ -44,4 +45,10 @@ void dae::Qbert::RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver)
 int dae::Qbert::GetLives() const
 {
 	return m_Lives;
+}
+
+dae::Qbert::Qbert(const Qbert& other)
+{
+	std::copy(other.m_pObservers.begin(), other.m_pObservers.end(), std::back_inserter(m_pObservers));
+	m_Lives = other.m_Lives;
 }

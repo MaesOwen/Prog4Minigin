@@ -4,7 +4,6 @@
 #include <glm/vec3.hpp>
 #pragma warning(pop)
 #include "Component.h"
-#include "Transform.h"
 
 namespace dae
 {

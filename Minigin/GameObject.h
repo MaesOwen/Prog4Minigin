@@ -2,7 +2,6 @@
 
 #include <deque>
 
-#include "Transform.h"
 #include "SceneObject.h"
 
 namespace dae
@@ -10,7 +9,7 @@ namespace dae
 	class Component;
 	class Texture2D;
 	class TransformComponent;
-	class GameObject: public SceneObject
+	class GameObject final : public SceneObject
 	{
 	public:
 		void Update() override;
