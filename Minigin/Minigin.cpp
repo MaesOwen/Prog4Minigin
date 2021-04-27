@@ -8,8 +8,7 @@
 #include "ResourceManager.h"
 #include <SDL.h>
 
-#include <SDL.h>
-#include "audio.h"
+#include "audio.c"
 #include "AudioLocator.h"
 #include "SDL2AudioSystem.h"
 #include "ChangeTile.h"
@@ -51,7 +50,7 @@ void dae::Minigin::Initialize()
 	
 	Renderer::GetInstance().Init(m_Window);
 	
-	//initAudio(); //gives linked error
+	initAudio(); //gives linked error
 }
 
 /**
@@ -120,7 +119,9 @@ void dae::Minigin::LoadGame() const
 	tc->SetPosition(0, 120);
 	tc->SetTextColor(255, 0, 0);
 	qb->AddObserver(ld);
-	//ld->SetQbert(qb);
+	
+	ld->SetQbert(qb);
+	std::cout << "Qbert1 ref count " << qb.use_count() << std::endl;
 
 	//Score hud1
 	auto scoreGO = make_shared<GameObject>();
@@ -155,7 +156,9 @@ void dae::Minigin::LoadGame() const
 	tc->SetPosition(0, 120);
 	tc->SetTextColor(255, 0, 0);
 	qb->AddObserver(ld);
-	//ld->SetQbert(qb);
+	ld->SetQbert(qb);
+
+	std::cout << "Qbert2 ref count " << qb.use_count() << std::endl;
 
 	//Score hud 2
 	 scoreGO = make_shared<GameObject>();
@@ -181,7 +184,7 @@ void dae::Minigin::LoadGame() const
 	InputManager::GetInstance().PrintControls();
 
 	//Sound
-	AudioLocator::GetInstance().GetAudioSystem()->Load("points.wav");
+	AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/death.wav");
 	
 	
 	
@@ -195,6 +198,7 @@ void dae::Minigin::Cleanup()
 	AudioLocator::GetInstance().Destroy();
 	SDL_DestroyWindow(m_Window);
 	m_Window = nullptr;
+	endAudio();
 	SDL_Quit();
 }
 

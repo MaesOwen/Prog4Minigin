@@ -5,7 +5,7 @@ namespace dae
 	{
 	public:
 		virtual void Update() = 0;
-		virtual void Play(int id, int volumePereantage) = 0;
+		virtual void Play(int id, float volumePereantage) = 0;
 		virtual int Load(const std::string& fileName) = 0;
 		virtual void ToggleMute() = 0;
 

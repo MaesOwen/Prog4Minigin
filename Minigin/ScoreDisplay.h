@@ -15,6 +15,12 @@ namespace dae
 		void Died() override;
 		void ChangeTile() override;
 
+		virtual ~ScoreDisplay() = default;
+		ScoreDisplay(const ScoreDisplay& other) = delete;
+		ScoreDisplay(ScoreDisplay&& other) = delete;
+		ScoreDisplay& operator=(const ScoreDisplay& other) = delete;
+		ScoreDisplay& operator=(ScoreDisplay&& other) = delete;
+
 	private:
 		std::shared_ptr<TextComponent> m_pText;
 		int m_Score{};

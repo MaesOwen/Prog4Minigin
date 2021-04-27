@@ -47,6 +47,16 @@ int dae::Qbert::GetLives() const
 	return m_Lives;
 }
 
+dae::Qbert::Qbert()
+{
+	printf("Constructor for Qbert:  this=%p\n", this);
+}
+
+dae::Qbert::~Qbert()
+{
+	printf("Destructor for Qbert:  this=%p\n", this); 
+}
+
 dae::Qbert::Qbert(const Qbert& other)
 {
 	std::copy(other.m_pObservers.begin(), other.m_pObservers.end(), std::back_inserter(m_pObservers));

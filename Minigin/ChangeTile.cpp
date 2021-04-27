@@ -17,6 +17,6 @@ void dae::ChangeTile::execute()
 	if (qbert)
 	{
 		qbert->ChangeTile();
-		AudioLocator::GetInstance().GetAudioSystem()->Play(0, 1);
+		AudioLocator::GetInstance().GetAudioSystem()->Play(0, 0.05f);
 	}
 }

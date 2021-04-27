@@ -17,12 +17,20 @@ namespace dae
 		void Render() const override;
 		void Died() override;
 		void ChangeTile() override;
-		void SetQbert(const std::shared_ptr<Qbert>& pQbert);
+		void SetQbert(const std::shared_ptr<Qbert> pQbert);
+		void SetQbert(const std::weak_ptr<Qbert> pQbert);
 		void SetQbert(Qbert* pQbert);
+
+		virtual ~LivesDisplay();
+		LivesDisplay(const LivesDisplay& other) = delete;
+		LivesDisplay(LivesDisplay&& other) = delete;
+		LivesDisplay& operator=(const LivesDisplay& other) = delete;
+		LivesDisplay& operator=(LivesDisplay&& other) = delete;
+
 
 	private:
 		std::shared_ptr<TextComponent> m_pText;
-		std::shared_ptr<Qbert> m_pPlayer;
+		std::weak_ptr<Qbert> m_pPlayer;
 	};
 	
 }

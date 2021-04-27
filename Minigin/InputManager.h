@@ -22,7 +22,6 @@ namespace dae
 	public:
 		bool ProcessInput();
 		bool IsPressed(ControllerButton button) const;
-		void BindControl(ControllerButton controllerButton, const std::shared_ptr<Command>& command);
 		
 		void BindControl(const std::string& name, const std::string& key, ControllerButton controllerButton, const std::shared_ptr<Command>& command);
 		void BindControl(const std::string& name, const std::string& key, const std::shared_ptr<Command>& command);

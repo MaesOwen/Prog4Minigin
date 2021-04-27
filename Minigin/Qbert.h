@@ -15,8 +15,8 @@ namespace dae
 		void RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver);
 		int GetLives() const;
 
-		Qbert() = default;
-		virtual ~Qbert() = default;
+		Qbert();
+		virtual ~Qbert();
 		Qbert(const Qbert& other);
 		Qbert(Qbert&& other) = delete;
 		Qbert& operator=(const Qbert& other) = delete;

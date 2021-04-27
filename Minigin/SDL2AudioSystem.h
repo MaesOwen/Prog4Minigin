@@ -12,12 +12,12 @@ namespace dae
 	struct SoundToPlay
 	{
 		std::string fileName;
-		int volume;
+		float volumePercentage;
 	};	
 	class SDL2AudioSystem: public AudioSystem
 	{
 	public:
-		void Play(int id, int volumePereantage) override;
+		void Play(int id, float volumePereantage) override;
 		void Update() override;
 		void ToggleMute() override;
 		int Load(const std::string& fileName) override;
@@ -35,5 +35,6 @@ namespace dae
 		bool m_IsMuted;
 		std::thread m_PlaySoundThread;
 		std::mutex m_Mutex;
+		std::atomic_bool m_isPlaying;
 	};
 }

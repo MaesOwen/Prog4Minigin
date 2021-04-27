@@ -52,28 +52,6 @@ bool dae::InputManager::IsPressed(ControllerButton button) const
 	}
 }
 
-void dae::InputManager::BindControl(ControllerButton controllerButton, const std::shared_ptr<Command>& command)
-{
-	switch (controllerButton)
-	{
-	case ControllerButton::ButtonX:
-		m_pButtonX = command;
-		break;
-	case ControllerButton::ButtonY:
-		m_pButtonY = command;
-		break;
-	case ControllerButton::ButtonA:
-		m_pButtonA = command;
-	case ControllerButton::ButtonB:
-		m_pButtonB = command;
-		break;
-	default:
-		break;
-	}
-}
-
-
-
 void dae::InputManager::BindControl(const std::string& name, const std::string& key, ControllerButton controllerButton, const std::shared_ptr<Command>& command)
 {
 	if (name != " " && command)
@@ -131,41 +109,16 @@ void dae::InputManager::HandleInput()
 	{
 		if (m_KeyPressed == it.second->keycode)
 		{
-			//std::cout << "Execute command by key input" << std::endl;
 			it.second->command->execute();
 		}
 		else if(m_LastControllerState.Gamepad.wButtons != m_CurrentControllerState.Gamepad.wButtons
 			&& IsPressed(it.second->controllerButton))
 		{
-			//std::cout << "Execute command by controller input" << std::endl;
 			it.second->command->execute();
 		}
 	}
 
 	m_KeyPressed = NULL;
-	/*if (m_LastControllerState.Gamepad.wButtons != m_CurrentControllerState.Gamepad.wButtons)
-	{
-		if (IsPressed(ControllerButton::ButtonX))
-		{
-			if (m_pButtonX)
-				m_pButtonX->execute();
-		}
-		if (IsPressed(ControllerButton::ButtonY))
-		{
-			if (m_pButtonY)
-				m_pButtonY->execute();
-		}
-		if (IsPressed(ControllerButton::ButtonA))
-		{
-			if (m_pButtonA)
-				m_pButtonA->execute();
-		}
-		if (IsPressed(ControllerButton::ButtonB))
-		{
-			if (m_pButtonB)
-				m_pButtonB->execute();
-		}
-	}*/
 	
 }
 
