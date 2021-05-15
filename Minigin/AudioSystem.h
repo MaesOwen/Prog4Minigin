@@ -1,6 +1,7 @@
 #pragma once
 namespace dae
 {
+#include <string>
 	class AudioSystem
 	{
 	public:

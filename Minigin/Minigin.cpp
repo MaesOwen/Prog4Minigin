@@ -50,7 +50,7 @@ void dae::Minigin::Initialize()
 	
 	Renderer::GetInstance().Init(m_Window);
 	
-	initAudio(); //gives linked error
+	initAudio(); 
 }
 
 /**
@@ -61,7 +61,7 @@ void dae::Minigin::LoadGame() const
 	//sound
 	SDL2AudioSystem* pSoundSystem = new SDL2AudioSystem(false);
 	AudioLocator::GetInstance().ProvideAudioSystem(pSoundSystem);
-	
+
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	auto go = std::make_shared<GameObject>();
@@ -77,7 +77,7 @@ void dae::Minigin::LoadGame() const
 	go->SetPosition(216, 180, 0.f);
 	scene.Add(go);
 
-	
+
 	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 	auto tc = std::make_shared<TextComponent>("Programming 4 Assignment", font);
 	go = std::make_shared<GameObject>();
@@ -99,17 +99,17 @@ void dae::Minigin::LoadGame() const
 		textComp->SetPosition(5, 5);
 	}
 	scene.Add(go);
-	
+
 	//Qbert1
-	auto qbertGO = make_shared<GameObject>();
-	rc = make_shared<RenderComponent>();
+	auto qbertGO = std::make_shared<GameObject>();
+	rc = std::make_shared<RenderComponent>();
 	rc->SetTexture("qbert.png");
 	qbertGO->AddComponent(rc);
 	auto qb = make_shared<Qbert>();
-	
+
 	qbertGO->AddComponent(qb);
 	qbertGO->GetTransformComponent()->SetPosition(50, 200, 0);
-	
+
 	//Lives hud 1
 	auto livesGO = make_shared<GameObject>();
 	livesGO->GetTransformComponent()->SetPosition(50, 250, 0);
@@ -119,7 +119,7 @@ void dae::Minigin::LoadGame() const
 	tc->SetPosition(0, 120);
 	tc->SetTextColor(255, 0, 0);
 	qb->AddObserver(ld);
-	
+
 	ld->SetQbert(qb);
 	std::cout << "Qbert1 ref count " << qb.use_count() << std::endl;
 
@@ -146,13 +146,13 @@ void dae::Minigin::LoadGame() const
 
 	qbertGO2->AddComponent(qb);
 	qbertGO2->GetTransformComponent()->SetPosition(420, 200, 0);
-	
+
 	//Lives hud 2
-	 livesGO = make_shared<GameObject>();
+	livesGO = make_shared<GameObject>();
 	livesGO->GetTransformComponent()->SetPosition(420, 250, 0);
 	tc = make_shared<TextComponent>("Lives: 3", font);
 	livesGO->AddComponent(tc);
-	 ld = std::make_shared<LivesDisplay>(livesGO);
+	ld = std::make_shared<LivesDisplay>(livesGO);
 	tc->SetPosition(0, 120);
 	tc->SetTextColor(255, 0, 0);
 	qb->AddObserver(ld);
@@ -161,11 +161,11 @@ void dae::Minigin::LoadGame() const
 	std::cout << "Qbert2 ref count " << qb.use_count() << std::endl;
 
 	//Score hud 2
-	 scoreGO = make_shared<GameObject>();
+	scoreGO = make_shared<GameObject>();
 	scoreGO->GetTransformComponent()->SetPosition(420, 250, 0);
 	tc = make_shared<TextComponent>("Score: 0", font);
 	scoreGO->AddComponent(tc);
-	 sd = std::make_shared<ScoreDisplay>(scoreGO);
+	sd = std::make_shared<ScoreDisplay>(scoreGO);
 	tc->SetPosition(0, 140);
 	tc->SetTextColor(0, 255, 0);
 	qb->AddObserver(sd);
@@ -173,7 +173,7 @@ void dae::Minigin::LoadGame() const
 	scene.Add(qbertGO2);
 	scene.Add(livesGO);
 	scene.Add(scoreGO);
-	
+
 	//input
 	InputManager::GetInstance().BindControl("PointsPlayer1", "W", ControllerButton::ButtonA, make_shared<Die>(qbertGO));
 	InputManager::GetInstance().BindControl("DeadPlayer1", "S", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
@@ -184,12 +184,7 @@ void dae::Minigin::LoadGame() const
 	InputManager::GetInstance().PrintControls();
 
 	//Sound
-	AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/death.wav");
-	
-	
-	
-	
-	
+	dae::AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/death.wav");
 }
 
 void dae::Minigin::Cleanup()
@@ -204,12 +199,12 @@ void dae::Minigin::Cleanup()
 
 void dae::Minigin::Run()
 {
-	Initialize();
+	//Initialize();
 
 	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../Data/");
+	//ResourceManager::GetInstance().Init("../Data/");
 
-	LoadGame();
+	//LoadGame();
 
 	{
 		auto& renderer = Renderer::GetInstance();

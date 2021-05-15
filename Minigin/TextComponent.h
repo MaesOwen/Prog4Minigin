@@ -1,11 +1,13 @@
 #pragma once
-#include <SDL_pixels.h>
 
+#include <SDL_pixels.h>
+#include <basetsd.h>
 #include "Component.h"
 #include "TransformComponent.h"
 
 namespace dae
 {
+	
 	class Texture2D;
 	class Font;
 	class TextComponent final: public Component

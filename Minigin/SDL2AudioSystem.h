@@ -1,11 +1,11 @@
 #pragma once
-#include "AudioSystem.h"
-#include <string>
-#include <map>
-#include "audio.h"
-#include <queue>
+
 #include <thread>
+#include <map>
+#include <queue>
 #include <mutex>
+#include "audio.h"
+#include "AudioSystem.h"
 
 namespace dae
 {
@@ -14,7 +14,7 @@ namespace dae
 		std::string fileName;
 		float volumePercentage;
 	};	
-	class SDL2AudioSystem: public AudioSystem
+	class SDL2AudioSystem final: public AudioSystem
 	{
 	public:
 		void Play(int id, float volumePereantage) override;
