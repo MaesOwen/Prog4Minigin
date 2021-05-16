@@ -15,7 +15,7 @@ namespace dae
 
 	private:
 		AudioSystem* m_pCurrentAudioSystem;
-		AudioSystem* m_pDefaultAudioSystem;
+		DefaultAudioSystem* m_pDefaultAudioSystem;
 
 		
 	};

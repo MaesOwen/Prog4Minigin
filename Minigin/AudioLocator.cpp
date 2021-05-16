@@ -2,11 +2,16 @@
 #include "MiniginPCH.h"
 #include "AudioLocator.h"
 
+
 dae::AudioSystem* dae::AudioLocator::GetAudioSystem()
 {
 	if (m_pCurrentAudioSystem != nullptr)
 	{
 		return  m_pCurrentAudioSystem;
+	}
+	if (m_pDefaultAudioSystem == nullptr)
+	{
+		m_pDefaultAudioSystem = new DefaultAudioSystem();
 	}
 	return m_pDefaultAudioSystem;
 }

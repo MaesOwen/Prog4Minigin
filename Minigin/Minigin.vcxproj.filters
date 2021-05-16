@@ -66,9 +66,6 @@
     <ClInclude Include="Minigin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\3rdParty\imgui-1.81\imconfig.h">
       <Filter>imgui</Filter>
     </ClInclude>
@@ -138,6 +135,9 @@
     <ClInclude Include="SDL2AudioSystem.h">
       <Filter>Services</Filter>
     </ClInclude>
+    <ClInclude Include="TimeMinigin.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">
@@ -171,9 +171,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\3rdParty\imgui-1.81\imgui.cpp">
@@ -235,6 +232,9 @@
     </ClCompile>
     <ClCompile Include="SDL2AudioSystem.cpp">
       <Filter>Services</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeMinigin.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

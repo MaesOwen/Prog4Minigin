@@ -4,14 +4,14 @@
 
 namespace dae
 {
-	class Time final: public Singleton<Time>
+	class TimeMinigin final: public Singleton<TimeMinigin>
 	{
 	public:
 		const float& GetDeltaTime() const;
 		void SetDeltaTime(const float deltaTime);
 	private:
-		friend class Singleton<Time>;
-		Time() = default;
+		friend class Singleton<TimeMinigin>;
+		TimeMinigin() = default;
 		float m_DeltaTime;
 	}; 
 }

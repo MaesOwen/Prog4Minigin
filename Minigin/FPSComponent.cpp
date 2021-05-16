@@ -4,11 +4,11 @@
 
 #include "GameObject.h"
 #include "TextComponent.h"
-#include "Time.h"
+#include "TimeMinigin.h"
 
 void dae::FPSComponent::Update()
 {
-	const float deltaTime = Time::GetInstance().GetDeltaTime();
+	const float deltaTime = TimeMinigin::GetInstance().GetDeltaTime();
 	m_ElapsedTime += deltaTime;
 	m_AverageDeltaTime += deltaTime;
 	m_AverageDeltaTime /= 2.f;

@@ -1,6 +1,10 @@
 #include "MiniginPCH.h"
 #include "SDL2AudioSystem.h"
 
+
+#include <audio.h>
+#include <SDL.h>
+
 void dae::SDL2AudioSystem::Play(int id, float volumePereantage)
 {
 	std::cout << "Try to play " << id << ", volume: " << volumePereantage << std::endl;

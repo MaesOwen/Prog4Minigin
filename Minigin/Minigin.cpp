@@ -18,7 +18,7 @@
 #include "LivesDisplay.h"
 #include "Qbert.h"
 #include "Scene.h"
-#include "Time.h"
+#include "TimeMinigin.h"
 #include "RenderComponent.h"
 #include "ScoreDisplay.h"
 #include "TextComponent.h"
@@ -217,7 +217,7 @@ void dae::Minigin::Run()
 		while (doContinue)
 		{
 			const auto currentTime = high_resolution_clock::now();
-			Time::GetInstance().SetDeltaTime(std::chrono::duration<float>(currentTime - lastTime).count());
+			TimeMinigin::GetInstance().SetDeltaTime(std::chrono::duration<float>(currentTime - lastTime).count());
 			
 			doContinue = input.ProcessInput();
 			sceneManager.Update();

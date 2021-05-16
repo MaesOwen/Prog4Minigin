@@ -17,4 +17,12 @@ namespace dae
 		AudioSystem& operator=(const AudioSystem& other) = delete;
 		AudioSystem& operator=(AudioSystem&& other) = delete;
 	};
+	class DefaultAudioSystem final : public AudioSystem
+	{
+		void Update() override {};
+		void Play(int, float) override {};
+		int Load(const std::string&) override { return 0; };
+		void ToggleMute() override {};
+
+	};
 }
