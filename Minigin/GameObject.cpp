@@ -5,6 +5,7 @@
 #include "Component.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include "TextComponent.h"
 
 
 dae::GameObject::GameObject()
@@ -42,6 +43,7 @@ void dae::GameObject::SetPosition(const float x, const float y, const float z)
 	{
 		pTransform->SetPosition(x, y, z);
 	}
+	
 }
 
 std::shared_ptr<dae::TransformComponent> dae::GameObject::GetTransformComponent() const
@@ -55,4 +57,14 @@ void dae::GameObject::AddComponent(std::shared_ptr<Component> pComponent)
 {
 	pComponent->SetOwner(std::make_shared<GameObject>(*this));
 	m_pComponents.push_front(pComponent);	
+}
+
+void dae::GameObject::AddParent(std::shared_ptr<GameObject>& parentGO)
+{
+	m_pParentGO = parentGO;
+}
+
+void dae::GameObject::AddChild(std::shared_ptr<GameObject>& childGO)
+{
+	m_pChildrenGOs.push_back(childGO);
 }

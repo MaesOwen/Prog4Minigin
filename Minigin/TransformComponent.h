@@ -13,7 +13,7 @@ namespace dae
 		void Update() override;
 		void Render() const override;
 		void SetPosition(const float x, const float y, const float z);
-		const glm::vec3& GetPosition() const { return m_Position; };
+		const glm::vec3& GetPosition() const { return m_Position; }
 		
 		TransformComponent() = default;
 	private:

@@ -33,16 +33,9 @@ void dae::TextComponent::Render() const
 {
 	if (m_pTexture != nullptr) 
 	{
-		const auto pos = m_pTransform->GetPosition();
+		const auto pos = m_pOwner->GetTransformComponent()->GetPosition() + m_pTransform->GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
-}
-
-void dae::TextComponent::SetOwner(std::shared_ptr<GameObject> pOwner)
-{
-	Component::SetOwner(pOwner);
-	const auto pos = pOwner->GetTransformComponent()->GetPosition();
-	m_pTransform->SetPosition(pos.x, pos.y, pos.z);
 }
 
 void dae::TextComponent::SetText(const std::string& text)
@@ -53,8 +46,8 @@ void dae::TextComponent::SetText(const std::string& text)
 
 void dae::TextComponent::SetPosition(float x, float y)
 {
-	const auto pos = m_pOwner->GetTransformComponent()->GetPosition();
-	m_pTransform->SetPosition(pos.x + x, pos.y + y, pos.z + 0.0f);
+	m_pTransform->SetPosition(x, y, 0.0f);
+	
 }
 
 void dae::TextComponent::SetTextColor(UINT8 r, UINT8 g, UINT8 b)

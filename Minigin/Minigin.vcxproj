@@ -239,7 +239,6 @@
     <ClInclude Include="..\3rdParty\imgui-1.81\imstb_truetype.h" />
     <ClInclude Include="AudioLocator.h" />
     <ClInclude Include="AudioSystem.h" />
-    <ClInclude Include="ChangeTile.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Die.h" />
@@ -261,6 +260,7 @@
     <ClInclude Include="ScoreDisplay.h" />
     <ClInclude Include="SDL2AudioSystem.h" />
     <ClInclude Include="Singleton.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="TextComponent.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="TimeMinigin.h" />
@@ -338,7 +338,6 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">D:\2020_2021\Programming4\Minigin\3rdParty\imgui-1.81;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="AudioLocator.cpp" />
-    <ClCompile Include="ChangeTile.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Die.cpp" />
@@ -364,6 +363,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ScoreDisplay.cpp" />
     <ClCompile Include="SDL2AudioSystem.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TextComponent.cpp" />
     <ClCompile Include="Texture2D.cpp" />
     <ClCompile Include="TimeMinigin.cpp" />

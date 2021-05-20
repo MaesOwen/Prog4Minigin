@@ -5,6 +5,7 @@
 
 
 //#include <iostream>
+#include <iostream>
 #include <Minigin.h>
 
 #include <string>
@@ -24,13 +25,15 @@
 #include "FPSComponent.h"
 #include "InputManager.h"
 #include "LivesDisplay.h"
+#include "Platform.h"
 #include "ScoreDisplay.h"
 #include "SDL2AudioSystem.h"
+#include "Sprite.h"
 
 using namespace dae;
 using namespace std;
 void LoadGame();
-
+void CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene);
 
 
 int main()
@@ -92,15 +95,35 @@ void LoadGame()
 	}
 	scene.Add(go);
 
+	//level try out
+	int beginPosX = 320; //middle of screen
+	int beginPosY = 100;
+	int platformWidth = 64;
+	int platformHeight = 48;
+	CreateLevelPlatform(beginPosX, beginPosY, platformWidth, platformHeight, scene);
+	
+
+	int qbertWidth = 30;
+	int qbertHeight = 30;
+
 	//Qbert1
 	auto qbertGO = std::make_shared<GameObject>();
-	rc = std::make_shared<RenderComponent>();
-	rc->SetTexture("qbert.png");
-	qbertGO->AddComponent(rc);
+	auto sc = std::make_shared<Sprite>(qbertWidth, qbertHeight);
+	sc->SetTexture("sprites.png");
+	sc->AddFrame({ 112,0,15,15 });
+	sc->AddFrame({ 96,0,15,15 });
+	sc->AddFrame({ 80,0,15,15 });
+	sc->AddFrame({ 64,0,15,15 });
+	sc->AddFrame({ 48,0,15,15 });
+	sc->AddFrame({ 32,0,15,15 });
+	sc->AddFrame({ 16,0,15,15 });
+	sc->AddFrame({ 0,0,15,15 });
+	sc->NextFrame();
+	qbertGO->AddComponent(sc);
 	auto qb = make_shared<Qbert>();
 
 	qbertGO->AddComponent(qb);
-	qbertGO->GetTransformComponent()->SetPosition(50, 200, 0);
+	qbertGO->GetTransformComponent()->SetPosition(beginPosX, beginPosY, 0);
 
 	//Lives hud 1
 	auto livesGO = make_shared<GameObject>();
@@ -113,7 +136,6 @@ void LoadGame()
 	qb->AddObserver(ld);
 
 	ld->SetQbert(qb);
-	//std::cout << "Qbert1 ref count " << qb.use_count() << std::endl;
 
 	//Score hud1
 	auto scoreGO = make_shared<GameObject>();
@@ -150,8 +172,6 @@ void LoadGame()
 	qb->AddObserver(ld);
 	ld->SetQbert(qb);
 
-	//std::cout << "Qbert2 ref count " << qb.use_count() << std::endl;
-
 	//Score hud 2
 	scoreGO = make_shared<GameObject>();
 	scoreGO->GetTransformComponent()->SetPosition(420, 250, 0);
@@ -166,15 +186,62 @@ void LoadGame()
 	scene.Add(livesGO);
 	scene.Add(scoreGO);
 
+	
+	
+	
+
 	//input
 	InputManager::GetInstance().BindControl("PointsPlayer1", "W", ControllerButton::ButtonA, make_shared<Die>(qbertGO));
 	InputManager::GetInstance().BindControl("DeadPlayer1", "S", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
 	InputManager::GetInstance().BindControl("PointsPlayer2", "E", ControllerButton::ButtonX, make_shared<Die>(qbertGO2));
 	InputManager::GetInstance().BindControl("DeadPlayer2", "D", ControllerButton::ButtonY, make_shared<ChangeTile>(qbertGO2));
 
+	/*
+	InputManager::GetInstance().BindControl("TopLeftJumpP1", "W", ControllerButton::ButtonY, make_shared<Die>(qbertGO));
+	InputManager::GetInstance().BindControl("TopRightJumpP1", "D", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
+	InputManager::GetInstance().BindControl("BottomLeftJumpP1", "A", ControllerButton::ButtonX, make_shared<Die>(qbertGO));
+	InputManager::GetInstance().BindControl("BottomRightJumpP1", "S", ControllerButton::ButtonA, make_shared<ChangeTile>(qbertGO));
+	*/
+	
 	//ShowControls
 	InputManager::GetInstance().PrintControls();
 
 	////Sound
 	dae::AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/death.wav");
+}
+
+void CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene)
+{
+	int nrOfBlocksPerRow = 1;
+	for (int row = 0; row < 7; row++)
+	{
+		nrOfBlocksPerRow = row + 1;
+		beginPosX -= (platformWidth / 2);
+
+		for (int col = 0; col < nrOfBlocksPerRow; col++)
+		{
+			auto go = std::make_shared<GameObject>();
+			auto sc = std::make_shared<Sprite>(platformWidth, platformWidth);
+			auto pc = std::make_shared<Platform>(Platform::PlatFormCoords{row, col,{},{},{} }, 1);
+			auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 12);
+			string test = std::to_string(row) + ", " + std::to_string(col);
+			auto tc = std::make_shared<TextComponent>(test, font);
+
+			tc->SetPosition(float(platformWidth / 2), float(platformHeight / 4));
+			tc->SetTextColor(255, 255, 255);
+			sc->SetTexture("sprites.png");
+			sc->AddFrame(Sprite::Frame{ 0,224, 31, 31 });
+			sc->AddFrame(Sprite::Frame{ 0,192, 31, 31 });
+			sc->AddFrame(Sprite::Frame{ 0,160, 31, 31 });
+
+			go->AddComponent(tc);
+			go->AddComponent(sc);
+			go->AddComponent(pc);
+			
+
+			go->SetPosition(beginPosX + platformWidth * col, beginPosY + platformHeight * row, 0.f);
+			scene.Add(go);
+		}
+
+	}
 }

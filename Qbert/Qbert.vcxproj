@@ -177,7 +177,13 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\Minigin\ChangeTile.cpp" />
+    <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Qbert.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Minigin\ChangeTile.h" />
+    <ClInclude Include="Platform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

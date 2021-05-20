@@ -15,7 +15,6 @@ namespace dae
 	public:
 		void Update() override;
 		void Render() const override;
-		void SetOwner(std::shared_ptr<GameObject> pOwner) override;
 
 		void SetText(const std::string& text);
 		void SetPosition(float x, float y);

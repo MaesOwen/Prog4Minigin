@@ -111,14 +111,8 @@
     <ClInclude Include="Die.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Qbert.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="QbertObserver.h">
       <Filter>Observers</Filter>
-    </ClInclude>
-    <ClInclude Include="ChangeTile.h">
-      <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="LivesDisplay.h">
       <Filter>Observers</Filter>
@@ -137,6 +131,12 @@
     </ClInclude>
     <ClInclude Include="TimeMinigin.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Qbert.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,9 +194,6 @@
     <ClCompile Include="..\3rdParty\imgui-1.81\backends\imgui_impl_sdl.cpp">
       <Filter>imgui</Filter>
     </ClCompile>
-    <ClCompile Include="ChangeTile.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
     <ClCompile Include="Command.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
@@ -218,9 +215,6 @@
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="Qbert.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="LivesDisplay.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
@@ -235,6 +229,12 @@
     </ClCompile>
     <ClCompile Include="TimeMinigin.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Qbert.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
