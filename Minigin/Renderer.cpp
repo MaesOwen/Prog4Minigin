@@ -108,3 +108,9 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, SDL_Rect sourceRect,
 {
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &sourceRect, &dstRect);
 }
+
+void dae::Renderer::DrawRect(const SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a)
+{
+	SDL_SetRenderDrawColor(GetSDLRenderer(), r, g, b, a);
+	SDL_RenderDrawRect(GetSDLRenderer(), &rect);
+}

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <deque>
+#include <glm/detail/type_vec.hpp>
+
 
 #include "SceneObject.h"
 
@@ -15,10 +17,13 @@ namespace dae
 		void Update() override;
 		void Render() const override;
 		void SetPosition(const float x, const float y, const float z);
+		void SetPosition(const glm::vec3& pos);
 		std::shared_ptr<TransformComponent> GetTransformComponent() const;
 		void AddComponent(std::shared_ptr<Component> pComponent);
 		void AddParent(std::shared_ptr<GameObject>& parentGO);
 		void AddChild(std::shared_ptr<GameObject>& childGO);
+		std::vector<std::weak_ptr<GameObject>>& GetChildren();
+		const int GetChildCount() const;
 		
 		
 		template <typename T>
@@ -60,5 +65,7 @@ namespace dae
 		std::deque<std::shared_ptr<Component>> m_pComponents;
 		std::weak_ptr<GameObject> m_pParentGO;
 		std::vector<std::weak_ptr<GameObject>> m_pChildrenGOs;
+
+		void MoveChildrenPosition(float x, float y, float z);
 	};
 }

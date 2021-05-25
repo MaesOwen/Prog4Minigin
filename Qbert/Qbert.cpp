@@ -21,9 +21,14 @@
 
 #include "AudioLocator.h"
 #include "ChangeTile.h"
+#include "CrossJump.h"
 #include "Die.h"
 #include "FPSComponent.h"
 #include "InputManager.h"
+#include "JumpBottomLeft.h"
+#include "JumpBottomRight.h"
+#include "JumpTopLeft.h"
+#include "JumpTopRight.h"
 #include "LivesDisplay.h"
 #include "Platform.h"
 #include "ScoreDisplay.h"
@@ -33,7 +38,7 @@
 using namespace dae;
 using namespace std;
 void LoadGame();
-void CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene);
+std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene);
 
 
 int main()
@@ -100,13 +105,15 @@ void LoadGame()
 	int beginPosY = 100;
 	int platformWidth = 64;
 	int platformHeight = 48;
-	CreateLevelPlatform(beginPosX, beginPosY, platformWidth, platformHeight, scene);
+
+	auto hexGridGO = CreateLevelPlatform(beginPosX, beginPosY, platformWidth, platformHeight, scene);
 	
 
+	//Qbert
 	int qbertWidth = 30;
 	int qbertHeight = 30;
 
-	//Qbert1
+	
 	auto qbertGO = std::make_shared<GameObject>();
 	auto sc = std::make_shared<Sprite>(qbertWidth, qbertHeight);
 	sc->SetTexture("sprites.png");
@@ -118,12 +125,16 @@ void LoadGame()
 	sc->AddFrame({ 32,0,15,15 });
 	sc->AddFrame({ 16,0,15,15 });
 	sc->AddFrame({ 0,0,15,15 });
-	sc->NextFrame();
+	sc->SetSpriteAlignment(Sprite::SpriteAlignment::botMiddle);
 	qbertGO->AddComponent(sc);
+	
 	auto qb = make_shared<Qbert>();
-
 	qbertGO->AddComponent(qb);
-	qbertGO->GetTransformComponent()->SetPosition(beginPosX, beginPosY, 0);
+
+	auto cc = make_shared<CrossJump>();
+	cc->SetPlatformMap(hexGridGO);
+	qbertGO->AddComponent(cc);
+	qbertGO->GetTransformComponent()->SetPosition(float(beginPosX), float(beginPosY), 0);
 
 	//Lives hud 1
 	auto livesGO = make_shared<GameObject>();
@@ -150,58 +161,22 @@ void LoadGame()
 	scene.Add(qbertGO);
 	scene.Add(livesGO);
 	scene.Add(scoreGO);
-
-	//Qbert2
-	auto qbertGO2 = make_shared<GameObject>();
-	rc = make_shared<RenderComponent>();
-	rc->SetTexture("qbert.png");
-	qbertGO2->AddComponent(rc);
-	qb = make_shared<Qbert>();
-
-	qbertGO2->AddComponent(qb);
-	qbertGO2->GetTransformComponent()->SetPosition(420, 200, 0);
-
-	//Lives hud 2
-	livesGO = make_shared<GameObject>();
-	livesGO->GetTransformComponent()->SetPosition(420, 250, 0);
-	tc = make_shared<TextComponent>("Lives: 3", font);
-	livesGO->AddComponent(tc);
-	ld = std::make_shared<LivesDisplay>(livesGO);
-	tc->SetPosition(0, 120);
-	tc->SetTextColor(255, 0, 0);
-	qb->AddObserver(ld);
-	ld->SetQbert(qb);
-
-	//Score hud 2
-	scoreGO = make_shared<GameObject>();
-	scoreGO->GetTransformComponent()->SetPosition(420, 250, 0);
-	tc = make_shared<TextComponent>("Score: 0", font);
-	scoreGO->AddComponent(tc);
-	sd = std::make_shared<ScoreDisplay>(scoreGO);
-	tc->SetPosition(0, 140);
-	tc->SetTextColor(0, 255, 0);
-	qb->AddObserver(sd);
-
-	scene.Add(qbertGO2);
-	scene.Add(livesGO);
-	scene.Add(scoreGO);
-
 	
 	
 	
 
-	//input
-	InputManager::GetInstance().BindControl("PointsPlayer1", "W", ControllerButton::ButtonA, make_shared<Die>(qbertGO));
-	InputManager::GetInstance().BindControl("DeadPlayer1", "S", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
-	InputManager::GetInstance().BindControl("PointsPlayer2", "E", ControllerButton::ButtonX, make_shared<Die>(qbertGO2));
-	InputManager::GetInstance().BindControl("DeadPlayer2", "D", ControllerButton::ButtonY, make_shared<ChangeTile>(qbertGO2));
+	//input player1
+	InputManager::GetInstance().BindControl("TopLeftJumpP1", "W", ControllerButton::ButtonY, make_shared<JumpTopLeft>(qbertGO));
+	InputManager::GetInstance().BindControl("TopRightJumpP1", "D", ControllerButton::ButtonB, make_shared<JumpTopRight>(qbertGO));
+	InputManager::GetInstance().BindControl("BottomLeftJumpP1", "A", ControllerButton::ButtonX, make_shared<JumpBottomLeft>(qbertGO));
+	InputManager::GetInstance().BindControl("BottomRightJumpP1", "S", ControllerButton::ButtonA, make_shared<JumpBottomRight>(qbertGO));
+	
+	//InputManager::GetInstance().BindControl("PointsPlayer1", "W", ControllerButton::ButtonA, make_shared<Die>(qbertGO));
+	//InputManager::GetInstance().BindControl("DeadPlayer1", "S", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
 
-	/*
-	InputManager::GetInstance().BindControl("TopLeftJumpP1", "W", ControllerButton::ButtonY, make_shared<Die>(qbertGO));
-	InputManager::GetInstance().BindControl("TopRightJumpP1", "D", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
-	InputManager::GetInstance().BindControl("BottomLeftJumpP1", "A", ControllerButton::ButtonX, make_shared<Die>(qbertGO));
-	InputManager::GetInstance().BindControl("BottomRightJumpP1", "S", ControllerButton::ButtonA, make_shared<ChangeTile>(qbertGO));
-	*/
+	
+	
+	
 	
 	//ShowControls
 	InputManager::GetInstance().PrintControls();
@@ -210,8 +185,9 @@ void LoadGame()
 	dae::AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/death.wav");
 }
 
-void CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene)
+std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene)
 {
+	auto hexGridGO = make_shared<GameObject>();
 	int nrOfBlocksPerRow = 1;
 	for (int row = 0; row < 7; row++)
 	{
@@ -220,28 +196,36 @@ void CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int pl
 
 		for (int col = 0; col < nrOfBlocksPerRow; col++)
 		{
-			auto go = std::make_shared<GameObject>();
+			auto platformGO = std::make_shared<GameObject>();
 			auto sc = std::make_shared<Sprite>(platformWidth, platformWidth);
-			auto pc = std::make_shared<Platform>(Platform::PlatFormCoords{row, col,{},{},{} }, 1);
+			auto pc = std::make_shared<Platform>(Platform::PlatFormCoords{row, col}, 1);
 			auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 12);
 			string test = std::to_string(row) + ", " + std::to_string(col);
 			auto tc = std::make_shared<TextComponent>(test, font);
 
-			tc->SetPosition(float(platformWidth / 2), float(platformHeight / 4));
+			platformGO->AddComponent(pc);
+			platformGO->AddComponent(tc);
+			platformGO->AddComponent(sc);
+
+			tc->SetPosition(platformWidth / 2.f, platformHeight / 4.f);
 			tc->SetTextColor(255, 255, 255);
 			sc->SetTexture("sprites.png");
 			sc->AddFrame(Sprite::Frame{ 0,224, 31, 31 });
 			sc->AddFrame(Sprite::Frame{ 0,192, 31, 31 });
 			sc->AddFrame(Sprite::Frame{ 0,160, 31, 31 });
 
-			go->AddComponent(tc);
-			go->AddComponent(sc);
-			go->AddComponent(pc);
+			const float posX{ float(beginPosX + platformWidth * col) };
+			const float posY{ float(beginPosY + platformHeight * row) };
 			
+			pc->SetTopSidePos(posX + platformWidth/2.f, posY + platformHeight/5.f*2.f, 0);
 
-			go->SetPosition(beginPosX + platformWidth * col, beginPosY + platformHeight * row, 0.f);
-			scene.Add(go);
+			platformGO->SetPosition(posX, posY, 0.f);
+			scene.Add(platformGO);
+
+			platformGO->AddParent(hexGridGO);
+			hexGridGO->AddChild(platformGO);
 		}
 
 	}
+	return hexGridGO;
 }

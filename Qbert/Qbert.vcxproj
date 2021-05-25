@@ -178,11 +178,21 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\Minigin\ChangeTile.cpp" />
+    <ClCompile Include="CrossJump.cpp" />
+    <ClCompile Include="JumpBottomLeft.cpp" />
+    <ClCompile Include="JumpBottomRight.cpp" />
+    <ClCompile Include="JumpTopLeft.cpp" />
+    <ClCompile Include="JumpTopRight.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Qbert.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\ChangeTile.h" />
+    <ClInclude Include="CrossJump.h" />
+    <ClInclude Include="JumpBottomLeft.h" />
+    <ClInclude Include="JumpBottomRight.h" />
+    <ClInclude Include="JumpTopLeft.h" />
+    <ClInclude Include="JumpTopRight.h" />
     <ClInclude Include="Platform.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

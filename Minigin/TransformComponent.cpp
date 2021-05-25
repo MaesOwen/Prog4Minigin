@@ -15,3 +15,10 @@ void dae::TransformComponent::SetPosition(const float x, const float y, const fl
 	m_Position.y = y;
 	m_Position.z = z;
 }
+
+void dae::TransformComponent::AddToPosition(const float x, const float y, const float z)
+{
+	m_Position.x += x;
+	m_Position.y += y;
+	m_Position.z += z;
+}
