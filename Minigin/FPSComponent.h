@@ -13,7 +13,7 @@ namespace dae
 		
 		void Update() override;
 		void Render() const override;
-		void SetOwner(std::shared_ptr<GameObject>& pOwner) override;
+		void SetOwner(GameObject* pOwner) override;
 		void SetPosition(float x, float y);
 
 		FPSComponent() = default;

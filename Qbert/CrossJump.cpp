@@ -20,7 +20,7 @@ void CrossJump::Update()
 {
 	if (m_IsJumping)
 	{
-		auto transform = m_pOwner->GetTransformComponent();
+		auto transform = GetOwner()->GetTransformComponent();
 		auto newPos = transform->GetPosition() + m_Velocity * dae::TimeMinigin::GetInstance().GetDeltaTime();
 		transform->SetPosition(newPos.x, newPos.y, newPos.z);
 
@@ -141,14 +141,18 @@ void CrossJump::JumpToPos(const glm::vec3& pos)
 
 void CrossJump::LandOnPlatform()
 {
-	
-	auto sprite = m_pOwner->GetComponent<dae::Sprite>();
-	if (sprite)
-		sprite->NextFrame();
+	auto owner = GetOwner();
+	if(owner)
+	{
+		auto sprite = owner->GetComponent<dae::Sprite>();
+		if (sprite)
+			sprite->NextFrame();
 
-	auto platform = m_PlatformMap.find({ m_CurrentCoords.row, m_CurrentCoords.col })->second;
-	if(platform)
-		platform->JumpOn(m_pOwner);
+		auto platform = m_PlatformMap.find({ m_CurrentCoords.row, m_CurrentCoords.col })->second;
+		if (platform)
+			platform->JumpOn(owner);
+	}
+	
 }
 
 void CrossJump::CheckGravity(float objectPosY, float platformPosY)
@@ -168,7 +172,7 @@ void CrossJump::CheckGravity(float objectPosY, float platformPosY)
 
 void CrossJump::ChangeSprite(DirCrossJump dirCrossJump)
 {
-	auto sprite = m_pOwner->GetComponent<dae::Sprite>();
+	auto sprite = GetOwner()->GetComponent<dae::Sprite>();
 	if(sprite)
 	{
 		switch (dirCrossJump)

@@ -31,9 +31,10 @@ void dae::TextComponent::Update()
 
 void dae::TextComponent::Render() const
 {
-	if (m_pTexture != nullptr) 
+	auto owner = GetOwner();
+	if (m_pTexture != nullptr && owner)
 	{
-		const auto pos = m_pOwner->GetTransformComponent()->GetPosition() + m_pTransform->GetPosition();
+		const auto pos = owner->GetTransformComponent()->GetPosition() + m_pTransform->GetPosition();
 		Renderer::GetInstance().RenderTexture(*m_pTexture, pos.x, pos.y);
 	}
 }

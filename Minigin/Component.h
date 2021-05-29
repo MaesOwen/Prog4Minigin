@@ -10,7 +10,9 @@ namespace dae
 		virtual void Update() = 0;
 		virtual void Render() const = 0;
 		virtual void SetOwner(std::shared_ptr<GameObject>& pOwner);
-		//virtual std::shared_ptr<GameObject>& GetOwner() const;
+		virtual void SetOwner(GameObject* pOwner);
+		//virtual std::shared_ptr<GameObject> GetOwner() const;
+		virtual GameObject* GetOwner() const;
 
 		Component() = default;
 		virtual ~Component() = default;
@@ -20,9 +22,9 @@ namespace dae
 		Component& operator=(Component&& other) = delete;
 	
 	protected:
-		std::shared_ptr<GameObject> m_pOwner;
+		GameObject* m_pOwner;
 	private:
-		
+		//std::shared_ptr<GameObject> m_pSharedOwner;
 	};
 
 }

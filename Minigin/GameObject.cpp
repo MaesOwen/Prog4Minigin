@@ -76,8 +76,8 @@ std::shared_ptr<dae::TransformComponent> dae::GameObject::GetTransformComponent(
 
 void dae::GameObject::AddComponent(const std::shared_ptr<Component>& pComponent)
 {
-	auto sharedGO = std::make_shared<GameObject>(*this);
-	pComponent->SetOwner(sharedGO);
+	//auto sharedGO = std::make_shared<GameObject>(*this);
+	pComponent->SetOwner(this);
 	m_pComponents.push_front(pComponent);	
 }
 

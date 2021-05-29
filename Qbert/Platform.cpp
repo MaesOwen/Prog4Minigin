@@ -28,9 +28,14 @@ void dae::Platform::Update()
 
 void dae::Platform::Render() const
 {
-	auto pos = m_pOwner->GetTransformComponent()->GetPosition();
-	//Renderer::GetInstance().DrawRect({int(m_TopSidePos.x),int(m_TopSidePos.y), 5,5 }, 255, 0, 0, 1);
-	Renderer::GetInstance().DrawRect({ int(m_TopSidePos.x),int(m_TopSidePos.y), 5,5 }, 0, 255, 0, 1);
+	auto owner = GetOwner();
+	if(owner)
+	{
+		auto pos = owner->GetTransformComponent()->GetPosition();
+		//Renderer::GetInstance().DrawRect({int(m_TopSidePos.x),int(m_TopSidePos.y), 5,5 }, 255, 0, 0, 1);
+		Renderer::GetInstance().DrawRect({ int(m_TopSidePos.x),int(m_TopSidePos.y), 5,5 }, 0, 255, 0, 1);
+	}
+	
 }
 
 void dae::Platform::JumpOff(std::shared_ptr<dae::GameObject>& gameobject)
@@ -69,8 +74,8 @@ void dae::Platform::ChangePlatformTile(std::shared_ptr<Qbert>& qbert)
 {
 	qbert->ChangeTile();
 
-	auto gridGO = m_pOwner->GetParent();
-	if(auto sharedGridGO = m_pOwner->GetParent().lock())
+	auto gridGO = GetOwner()->GetParent();
+	if(auto sharedGridGO = GetOwner()->GetParent().lock())
 	{
 		std::cout << "there is a parent" << std::endl;
 	}
@@ -88,7 +93,7 @@ void dae::Platform::JumpOn(std::shared_ptr<GameObject>& gameobject)
 	if (qbert)
 	{
 		
-		auto sprite = m_pOwner->GetComponent<Sprite>();
+		auto sprite = GetOwner()->GetComponent<Sprite>();
 		if (sprite)
 		{
 			
@@ -117,4 +122,10 @@ void dae::Platform::JumpOn(std::shared_ptr<GameObject>& gameobject)
 			sprite->SetFrame(m_CurrNrOfColorChanges);
 		}
 	}
+}
+
+void dae::Platform::JumpOn(GameObject* gameObject)
+{
+	auto sharedGO = std::make_shared<GameObject>(*gameObject);
+	JumpOn(sharedGO);
 }

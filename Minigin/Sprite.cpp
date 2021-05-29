@@ -32,9 +32,10 @@ void dae::Sprite::Update()
 
 void dae::Sprite::Render() const
 {
-	if (m_pTexture != nullptr && m_pFrames.size() > 0)
+	auto owner = GetOwner();
+	if (m_pTexture != nullptr && m_pFrames.size() > 0 && owner)
 	{
-		const auto oldpos = m_pOwner->GetTransformComponent()->GetPosition();
+		const auto oldpos = owner->GetTransformComponent()->GetPosition();
 		const auto pos = ChangePosToAlignment(oldpos);
 		Renderer::GetInstance().RenderTexture(
 			*m_pTexture,

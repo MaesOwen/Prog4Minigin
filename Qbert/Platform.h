@@ -23,6 +23,7 @@ namespace dae {
 		void Update() override;
 		void Render() const override;
 		void JumpOn(std::shared_ptr<GameObject>& gameObject);
+		void JumpOn(GameObject* gameObject);
 		void JumpOff(std::shared_ptr<GameObject>& gameObject);
 		const PlatFormCoords& GetPlatFormCoords();
 		const glm::vec3& GetTopSidePos();
