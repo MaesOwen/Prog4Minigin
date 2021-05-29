@@ -9,7 +9,8 @@ namespace dae
 	public:
 		virtual void Update() = 0;
 		virtual void Render() const = 0;
-		virtual void SetOwner(std::shared_ptr<GameObject> pOwner);
+		virtual void SetOwner(std::shared_ptr<GameObject>& pOwner);
+		//virtual std::shared_ptr<GameObject>& GetOwner() const;
 
 		Component() = default;
 		virtual ~Component() = default;

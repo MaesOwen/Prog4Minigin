@@ -29,7 +29,7 @@ void dae::ScoreDisplay::Died()
 
 void dae::ScoreDisplay::ChangeTile()
 {
-	m_Score += 50;
+	m_Score += 25;
 	if(m_pText)
 	{
 		m_pText->SetText("Score: " + std::to_string(m_Score));

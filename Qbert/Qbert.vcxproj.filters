@@ -42,6 +42,9 @@
     <ClCompile Include="JumpBottomLeft.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
+    <ClCompile Include="QbertSounds.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\ChangeTile.h">
@@ -64,6 +67,9 @@
     </ClInclude>
     <ClInclude Include="JumpBottomLeft.h">
       <Filter>Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSounds.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

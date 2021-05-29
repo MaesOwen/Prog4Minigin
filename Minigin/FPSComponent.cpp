@@ -29,7 +29,7 @@ void dae::FPSComponent::Render() const
 {
 }
 
-void dae::FPSComponent::SetOwner(std::shared_ptr<GameObject> pOwner)
+void dae::FPSComponent::SetOwner(std::shared_ptr<GameObject>& pOwner)
 {
 	m_pOwner = pOwner;
 	std::shared_ptr<TextComponent> possibleTextComponent = pOwner->GetComponent<TextComponent>();

@@ -1,5 +1,7 @@
 #include "MiniginPCH.h"
 #include "CrossJump.h"
+
+#include "AudioLocator.h"
 #include "TimeMinigin.h"
 #include "GameObject.h"
 #include "Sprite.h"
@@ -124,10 +126,12 @@ void CrossJump::JumpToPos(const glm::vec3& pos)
 		
 	}else
 	{
-		dir += glm::vec3{0, -1, 0};
+		float jumpUpMultiplier = 1.5f;
+		glm::vec3 upwardsVector{ 0, -1, 0 };
+		dir += upwardsVector;
 		length = sqrt(pow(dir.x, 2) + pow(dir.y, 2));
 		dir /= length;
-		m_Velocity = dir * (m_JumpingHeight * 1.3f);
+		m_Velocity = dir * (m_JumpingHeight * jumpUpMultiplier);
 	}
 
 	
@@ -137,6 +141,7 @@ void CrossJump::JumpToPos(const glm::vec3& pos)
 
 void CrossJump::LandOnPlatform()
 {
+	
 	auto sprite = m_pOwner->GetComponent<dae::Sprite>();
 	if (sprite)
 		sprite->NextFrame();

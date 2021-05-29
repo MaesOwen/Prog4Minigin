@@ -74,9 +74,10 @@ std::shared_ptr<dae::TransformComponent> dae::GameObject::GetTransformComponent(
 
 
 
-void dae::GameObject::AddComponent(std::shared_ptr<Component> pComponent)
+void dae::GameObject::AddComponent(const std::shared_ptr<Component>& pComponent)
 {
-	pComponent->SetOwner(std::make_shared<GameObject>(*this));
+	auto sharedGO = std::make_shared<GameObject>(*this);
+	pComponent->SetOwner(sharedGO);
 	m_pComponents.push_front(pComponent);	
 }
 
@@ -110,6 +111,11 @@ void dae::GameObject::AddChild(std::shared_ptr<GameObject>& childGO)
 std::vector<std::weak_ptr<dae::GameObject>>& dae::GameObject::GetChildren()
 {
 	return m_pChildrenGOs;
+}
+
+std::weak_ptr<dae::GameObject>& dae::GameObject::GetParent()
+{
+	return m_pParentGO;
 }
 
 const int dae::GameObject::GetChildCount() const

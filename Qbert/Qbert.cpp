@@ -31,6 +31,7 @@
 #include "JumpTopRight.h"
 #include "LivesDisplay.h"
 #include "Platform.h"
+#include "QbertSounds.h"
 #include "ScoreDisplay.h"
 #include "SDL2AudioSystem.h"
 #include "Sprite.h"
@@ -59,6 +60,9 @@ void LoadGame()
 	//sound
 	SDL2AudioSystem* pSoundSystem = new SDL2AudioSystem(false);
 	AudioLocator::GetInstance().ProvideAudioSystem(pSoundSystem);
+
+	int deathSoundId = dae::AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/death.wav");
+	int landQbertSoundId = dae::AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/land.wav");
 	
 	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
@@ -115,6 +119,11 @@ void LoadGame()
 
 	
 	auto qbertGO = std::make_shared<GameObject>();
+
+	auto qsc = make_shared<QbertSounds>();
+	qsc->SetQbertSound(QbertSounds::land, landQbertSoundId);
+	qbertGO->AddComponent(qsc);
+	
 	auto sc = std::make_shared<Sprite>(qbertWidth, qbertHeight);
 	sc->SetTexture("sprites.png");
 	sc->AddFrame({ 112,0,15,15 });
@@ -135,6 +144,8 @@ void LoadGame()
 	cc->SetPlatformMap(hexGridGO);
 	qbertGO->AddComponent(cc);
 	qbertGO->GetTransformComponent()->SetPosition(float(beginPosX), float(beginPosY), 0);
+
+	
 
 	//Lives hud 1
 	auto livesGO = make_shared<GameObject>();
@@ -181,8 +192,7 @@ void LoadGame()
 	//ShowControls
 	InputManager::GetInstance().PrintControls();
 
-	////Sound
-	dae::AudioLocator::GetInstance().GetAudioSystem()->Load("../Data/death.wav");
+	
 }
 
 std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene)
@@ -203,9 +213,11 @@ std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, in
 			string test = std::to_string(row) + ", " + std::to_string(col);
 			auto tc = std::make_shared<TextComponent>(test, font);
 
+			platformGO->AddComponent(sc);
 			platformGO->AddComponent(pc);
 			platformGO->AddComponent(tc);
-			platformGO->AddComponent(sc);
+			
+			
 
 			tc->SetPosition(platformWidth / 2.f, platformHeight / 4.f);
 			tc->SetTextColor(255, 255, 255);

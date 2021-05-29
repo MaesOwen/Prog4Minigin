@@ -185,6 +185,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="JumpTopRight.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Qbert.cpp" />
+    <ClCompile Include="QbertSounds.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Minigin\ChangeTile.h" />
@@ -194,6 +195,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="JumpTopLeft.h" />
     <ClInclude Include="JumpTopRight.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="QbertSounds.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

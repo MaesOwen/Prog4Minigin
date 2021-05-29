@@ -19,10 +19,11 @@ namespace dae
 		void SetPosition(const float x, const float y, const float z);
 		void SetPosition(const glm::vec3& pos);
 		std::shared_ptr<TransformComponent> GetTransformComponent() const;
-		void AddComponent(std::shared_ptr<Component> pComponent);
+		void AddComponent(const std::shared_ptr<Component>& pComponent);
 		void AddParent(std::shared_ptr<GameObject>& parentGO);
 		void AddChild(std::shared_ptr<GameObject>& childGO);
 		std::vector<std::weak_ptr<GameObject>>& GetChildren();
+		std::weak_ptr<GameObject>& GetParent();
 		const int GetChildCount() const;
 		
 		
