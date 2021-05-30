@@ -76,19 +76,20 @@ std::shared_ptr<dae::TransformComponent> dae::GameObject::GetTransformComponent(
 
 void dae::GameObject::AddComponent(const std::shared_ptr<Component>& pComponent)
 {
-	//auto sharedGO = std::make_shared<GameObject>(*this);
 	pComponent->SetOwner(this);
 	m_pComponents.push_front(pComponent);	
 }
 
-void dae::GameObject::AddParent(std::shared_ptr<GameObject>& parentGO)
+void dae::GameObject::AddParent(GameObject* pParentGO)
 {
-	m_pParentGO = parentGO;
+	m_pParentGO = pParentGO;
 
 }
 
 void dae::GameObject::AddChild(std::shared_ptr<GameObject>& childGO)
 {
+	childGO->AddParent(this);
+	
 	bool isDuplicate = false;
 	//isDuplicate = find(begin(m_pChildrenGOs), end(m_pChildrenGOs), childGO) == std::end(m_pChildrenGOs);
 
@@ -113,7 +114,7 @@ std::vector<std::weak_ptr<dae::GameObject>>& dae::GameObject::GetChildren()
 	return m_pChildrenGOs;
 }
 
-std::weak_ptr<dae::GameObject>& dae::GameObject::GetParent()
+dae::GameObject* dae::GameObject::GetParent()
 {
 	return m_pParentGO;
 }

@@ -4,27 +4,30 @@
 namespace dae
 {
 	class QbertObserver;
-	class Qbert final: public Component
+	class QbertComponent final: public Component
 	{
 	public:
 		void Update() override;
 		void Render() const override;
+		void SetOwner(GameObject* pOwner) override;
 		void Die();
 		void ChangeTile();
 		void AddObserver(const std::shared_ptr<QbertObserver>& pObserver);
 		void RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver);
 		int GetLives() const;
 
-		Qbert();
-		virtual ~Qbert();
-		Qbert(const Qbert& other);
-		Qbert(Qbert&& other) = delete;
-		Qbert& operator=(const Qbert& other) = delete;
-		Qbert& operator=(Qbert&& other) = delete;
+		QbertComponent(int qbertWidth, int qbertHeight);
+		virtual ~QbertComponent();
+		QbertComponent(const QbertComponent& other);
+		QbertComponent(QbertComponent&& other) = delete;
+		QbertComponent& operator=(const QbertComponent& other) = delete;
+		QbertComponent& operator=(QbertComponent&& other) = delete;
 
 	private:
 		int m_Lives{3};
 		std::vector<std::shared_ptr<QbertObserver>> m_pObservers;
+		int m_QbertWidth;
+		int m_QbertHeight;
 	};
 
 }

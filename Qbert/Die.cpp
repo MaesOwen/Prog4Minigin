@@ -4,7 +4,8 @@
 
 #include "AudioLocator.h"
 #include "GameObject.h"
-#include "Qbert.h"
+#include "../Qbert/QbertComponent.h"
+
 
 dae::Die::Die(const std::shared_ptr<GameObject>& pGameObject)
 	:Command(pGameObject)
@@ -14,7 +15,7 @@ dae::Die::Die(const std::shared_ptr<GameObject>& pGameObject)
 
 void dae::Die::execute()
 {
-	std::shared_ptr<Qbert> qbert = m_pGameObject->GetComponent<Qbert>();
+	std::shared_ptr<QbertComponent> qbert = m_pGameObject->GetComponent<QbertComponent>();
 	if (qbert)
 	{
 		AudioLocator::GetInstance().GetAudioSystem()->Play(0, 0.05f);

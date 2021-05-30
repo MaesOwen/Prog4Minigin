@@ -40,19 +40,21 @@ void dae::LivesDisplay::ChangeTile()
 {
 }
 
-void dae::LivesDisplay::SetQbert(const std::shared_ptr<Qbert> pQbert)
+
+
+void dae::LivesDisplay::SetQbert(const std::shared_ptr<QbertComponent> pQbert)
 {
 	m_pPlayer = pQbert;
 }
 
-void dae::LivesDisplay::SetQbert(const std::weak_ptr<Qbert> pQbert)
+void dae::LivesDisplay::SetQbert(const std::weak_ptr<QbertComponent> pQbert)
 {
 	m_pPlayer = pQbert.lock();
 }
 
-void dae::LivesDisplay::SetQbert(Qbert* pQbert)
+void dae::LivesDisplay::SetQbert(QbertComponent* pQbert)
 {
-	m_pPlayer = std::make_shared<Qbert>(*pQbert);
+	m_pPlayer = std::make_shared<QbertComponent>(*pQbert);
 }
 
 dae::LivesDisplay::~LivesDisplay()

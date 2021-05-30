@@ -19,6 +19,8 @@ public:
 	void Render() const override;
 	void SetPlatformMap(std::shared_ptr<dae::GameObject>& gridGO);
 	void Jump(DirCrossJump dirCrossJump);
+	void JumpColRow(int row, int col);
+	bool IsOnBottomPlatform() const;
 
 private:
 	bool m_IsJumping;
@@ -29,9 +31,12 @@ private:
 	glm::vec3 m_Velocity;
 	glm::vec3 m_Gravity;
 	float m_JumpingHeight;
+	bool m_IsOnBottomPlatform;
 
 	void JumpToPos(const glm::vec3& pos);
 	void LandOnPlatform();
 	void CheckGravity(float objectPosY, float platformPosY);
 	void ChangeSprite(DirCrossJump dirCrossJump);
+	bool CheckIfPlatformsAreComplete();
+	bool CheckIfOnBottomPlatform();
 };

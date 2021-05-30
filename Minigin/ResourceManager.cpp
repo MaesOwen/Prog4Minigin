@@ -37,7 +37,7 @@ std::shared_ptr<dae::Texture2D> dae::ResourceManager::LoadTexture(const std::str
 
 	
 	auto texture = IMG_LoadTexture(Renderer::GetInstance().GetSDLRenderer(), fullPath.c_str());
-	std::cout << SDL_GetError()  << std::endl;
+	
 	if (texture == nullptr) 
 	{
 		

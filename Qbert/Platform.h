@@ -42,7 +42,6 @@ namespace dae {
 		glm::vec3 m_RightSidePos;
 		bool m_AreSidesPosSet;
 		
-		void ChangePlatformTile(std::shared_ptr<Qbert>& qbert);
 		
 
 	};

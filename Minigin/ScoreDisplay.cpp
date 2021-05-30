@@ -35,3 +35,5 @@ void dae::ScoreDisplay::ChangeTile()
 		m_pText->SetText("Score: " + std::to_string(m_Score));
 	}
 }
+
+

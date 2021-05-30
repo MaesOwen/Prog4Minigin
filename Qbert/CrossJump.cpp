@@ -4,7 +4,8 @@
 #include "AudioLocator.h"
 #include "TimeMinigin.h"
 #include "GameObject.h"
-#include "Sprite.h"
+#include "QbertComponent.h"
+#include "QbertSprite.h"
 #include "TransformComponent.h"
 
 CrossJump::CrossJump()
@@ -13,6 +14,7 @@ CrossJump::CrossJump()
 	, m_Velocity()
 	, m_JumpingHeight(100)
 	, m_Gravity(0, 9.81f, 0)
+,m_IsOnBottomPlatform(false)
 {
 }
 
@@ -111,6 +113,15 @@ void CrossJump::Jump(DirCrossJump dirCrossJump)
 
 }
 
+void CrossJump::JumpColRow(int row, int col)
+{
+}
+
+bool CrossJump::IsOnBottomPlatform() const
+{
+	return m_IsOnBottomPlatform;
+}
+
 void CrossJump::JumpToPos(const glm::vec3& pos)
 {
 	glm::vec3 dir = pos - m_PlatformMap.find({ m_CurrentCoords.row, m_CurrentCoords.col })->second->GetTopSidePos();
@@ -149,9 +160,20 @@ void CrossJump::LandOnPlatform()
 			sprite->NextFrame();
 
 		auto platform = m_PlatformMap.find({ m_CurrentCoords.row, m_CurrentCoords.col })->second;
-		if (platform)
+		if (platform){}
 			platform->JumpOn(owner);
 	}
+
+	auto qbert = owner->GetComponent<dae::QbertComponent>();
+	if(qbert)
+	{
+		if (CheckIfPlatformsAreComplete())
+		{
+			std::cout << "Level completed" << std::endl;
+		}
+	}
+
+	m_IsOnBottomPlatform = CheckIfOnBottomPlatform();
 	
 }
 
@@ -172,23 +194,52 @@ void CrossJump::CheckGravity(float objectPosY, float platformPosY)
 
 void CrossJump::ChangeSprite(DirCrossJump dirCrossJump)
 {
-	auto sprite = GetOwner()->GetComponent<dae::Sprite>();
+	auto sprite = GetOwner()->GetComponent<dae::QbertSprite>();
 	if(sprite)
 	{
-		switch (dirCrossJump)
+		if(!sprite->GetIsBall())
 		{
-		case DirCrossJump::topLeft:
-			sprite->SetFrame(4);
-			break;
-		case DirCrossJump::topRight:
-			sprite->SetFrame(6);
-			break;
-		case DirCrossJump::bottomLeft:
-			sprite->SetFrame(0);
-			break;
-		case DirCrossJump::bottomRight:
-			sprite->SetFrame(2);
-			break;
+			switch (dirCrossJump)
+			{
+			case DirCrossJump::topLeft:
+				sprite->UseSpritePose(dae::QbertSprite::SpritePose::topLeftJump);
+				break;
+			case DirCrossJump::topRight:
+				sprite->UseSpritePose(dae::QbertSprite::SpritePose::topRightJump);
+				break;
+			case DirCrossJump::bottomLeft:
+				sprite->UseSpritePose(dae::QbertSprite::SpritePose::botLeftJump);
+				break;
+			case DirCrossJump::bottomRight:
+				sprite->UseSpritePose(dae::QbertSprite::SpritePose::botRightJump);
+				break;
+			}
+		}else
+		{
+			sprite->UseSpritePose(dae::QbertSprite::SpritePose::ballJump);
+		}
+		
+	}
+}
+
+bool CrossJump::CheckIfPlatformsAreComplete()
+{
+	for (auto platformIT: m_PlatformMap)
+	{
+		if(!platformIT.second->IsTargetColor())
+		{
+			return false;
 		}
 	}
+	return true;
+}
+
+bool CrossJump::CheckIfOnBottomPlatform()
+{
+	auto it = m_PlatformMap.find({ m_CurrentCoords.row+1, 0 });
+	if (it == std::end(m_PlatformMap))
+	{
+		return true;
+	}
+	return false;
 }

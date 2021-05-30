@@ -4,7 +4,7 @@
 
 #include "AudioLocator.h"
 #include "GameObject.h"
-#include "Qbert.h"
+#include "QbertComponent.h"
 #include "QbertSounds.h"
 #include "Renderer.h"
 #include "Sprite.h"
@@ -70,26 +70,15 @@ bool dae::Platform::IsTargetColor() const
 	return m_CurrNrOfColorChanges == m_MaxNrOfColorChanges;
 }
 
-void dae::Platform::ChangePlatformTile(std::shared_ptr<Qbert>& qbert)
-{
-	qbert->ChangeTile();
-
-	auto gridGO = GetOwner()->GetParent();
-	if(auto sharedGridGO = GetOwner()->GetParent().lock())
-	{
-		std::cout << "there is a parent" << std::endl;
-	}
-}
-
 void dae::Platform::JumpOn(std::shared_ptr<GameObject>& gameobject)
 {
 	m_pGameObjectsOnPlatform.push_back(gameobject);
+	
 	auto qbertSound = gameobject->GetComponent<QbertSounds>();
-	//dae::AudioLocator::GetInstance().GetAudioSystem()->Play(1, 0.1f);
 	if (qbertSound)
 		qbertSound->PlayQbertSound(QbertSounds::land);
 	
-	auto qbert = gameobject->GetComponent<Qbert>();
+	auto qbert = gameobject->GetComponent<QbertComponent>();
 	if (qbert)
 	{
 		
@@ -102,8 +91,6 @@ void dae::Platform::JumpOn(std::shared_ptr<GameObject>& gameobject)
 				if (m_CurrNrOfColorChanges + 1 <= m_MaxNrOfColorChanges)
 				{
 					m_CurrNrOfColorChanges++;
-
-					ChangePlatformTile(qbert);
 				}else
 				{
 					m_CurrNrOfColorChanges = 0;
@@ -114,9 +101,6 @@ void dae::Platform::JumpOn(std::shared_ptr<GameObject>& gameobject)
 				if (m_CurrNrOfColorChanges + 1 <= m_MaxNrOfColorChanges)
 				{
 					m_CurrNrOfColorChanges++;
-					
-					ChangePlatformTile(qbert);
-					
 				}
 			}
 			sprite->SetFrame(m_CurrNrOfColorChanges);

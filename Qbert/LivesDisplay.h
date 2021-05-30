@@ -3,7 +3,7 @@
 #include "QbertObserver.h"
 #include <memory>
 
-#include "Qbert.h"
+#include "QbertComponent.h"
 
 namespace dae
 {
@@ -17,9 +17,9 @@ namespace dae
 		void Render() const override;
 		void Died() override;
 		void ChangeTile() override;
-		void SetQbert(const std::shared_ptr<Qbert> pQbert);
-		void SetQbert(const std::weak_ptr<Qbert> pQbert);
-		void SetQbert(Qbert* pQbert);
+		void SetQbert(const std::shared_ptr<QbertComponent> pQbert);
+		void SetQbert(const std::weak_ptr<QbertComponent> pQbert);
+		void SetQbert(QbertComponent* pQbert);
 
 		virtual ~LivesDisplay();
 		LivesDisplay(const LivesDisplay& other) = delete;
@@ -30,7 +30,7 @@ namespace dae
 
 	private:
 		std::shared_ptr<TextComponent> m_pText;
-		std::weak_ptr<Qbert> m_pPlayer;
+		std::weak_ptr<QbertComponent> m_pPlayer;
 	};
 	
 }

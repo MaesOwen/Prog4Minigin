@@ -40,7 +40,7 @@ void dae::Sprite::Render() const
 		Renderer::GetInstance().RenderTexture(
 			*m_pTexture,
 			SDL_Rect{ m_pFrames[m_CurrentFrame].x, m_pFrames[m_CurrentFrame].y, m_pFrames[m_CurrentFrame].width, m_pFrames[m_CurrentFrame].height},
-			SDL_Rect{int(pos.x), int(pos.y), m_SpriteHeight, m_SpriteHeight});
+			SDL_Rect{int(pos.x), int(pos.y), m_SpriteWidth, m_SpriteHeight});
 	}
 }
 
@@ -54,9 +54,11 @@ void dae::Sprite::SetSpriteAlignment(SpriteAlignment spriteAlignment)
 	m_SpriteAlignment = spriteAlignment;
 }
 
-void dae::Sprite::AddFrame(Frame frame)
+int dae::Sprite::AddFrame(Frame frame)
 {
 	m_pFrames.push_back(frame);
+	
+	return int(m_pFrames.size()) - 1;
 }
 
 void dae::Sprite::NextFrame()
@@ -85,6 +87,11 @@ void dae::Sprite::SetFrame(int frameNr)
 {
 	if (0 <= frameNr && frameNr < int(m_pFrames.size()))
 		m_CurrentFrame = frameNr;
+}
+
+void dae::Sprite::ClearFrames()
+{
+	m_pFrames.clear();
 }
 
 void dae::Sprite::SetTimePerFrame(float timePerFrame)

@@ -20,10 +20,10 @@ namespace dae
 		void SetPosition(const glm::vec3& pos);
 		std::shared_ptr<TransformComponent> GetTransformComponent() const;
 		void AddComponent(const std::shared_ptr<Component>& pComponent);
-		void AddParent(std::shared_ptr<GameObject>& parentGO);
+		
 		void AddChild(std::shared_ptr<GameObject>& childGO);
 		std::vector<std::weak_ptr<GameObject>>& GetChildren();
-		std::weak_ptr<GameObject>& GetParent();
+		GameObject* GetParent();
 		const int GetChildCount() const;
 		
 		
@@ -64,9 +64,10 @@ namespace dae
 
 	private:
 		std::deque<std::shared_ptr<Component>> m_pComponents;
-		std::weak_ptr<GameObject> m_pParentGO;
+		GameObject* m_pParentGO;
 		std::vector<std::weak_ptr<GameObject>> m_pChildrenGOs;
 
 		void MoveChildrenPosition(float x, float y, float z);
+		void AddParent(GameObject* pParentGO);
 	};
 }

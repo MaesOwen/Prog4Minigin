@@ -108,13 +108,7 @@
     <ClInclude Include="Command.h">
       <Filter>Commands</Filter>
     </ClInclude>
-    <ClInclude Include="Die.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="QbertObserver.h">
-      <Filter>Observers</Filter>
-    </ClInclude>
-    <ClInclude Include="LivesDisplay.h">
       <Filter>Observers</Filter>
     </ClInclude>
     <ClInclude Include="ScoreDisplay.h">
@@ -133,9 +127,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sprite.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="Qbert.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Subject.h">
@@ -200,9 +191,6 @@
     <ClCompile Include="Command.cpp">
       <Filter>Commands</Filter>
     </ClCompile>
-    <ClCompile Include="Die.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -218,9 +206,6 @@
     <ClCompile Include="TransformComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="LivesDisplay.cpp">
-      <Filter>Observers</Filter>
-    </ClCompile>
     <ClCompile Include="ScoreDisplay.cpp">
       <Filter>Observers</Filter>
     </ClCompile>
@@ -234,9 +219,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="Qbert.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

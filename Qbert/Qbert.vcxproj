@@ -177,25 +177,39 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Minigin\ChangeTile.cpp" />
+    <ClCompile Include="BallAI.cpp" />
+    <ClCompile Include="ChangeTile.cpp" />
+    <ClCompile Include="Coily.cpp" />
+    <ClCompile Include="CoilyAI.cpp" />
     <ClCompile Include="CrossJump.cpp" />
+    <ClCompile Include="Die.cpp" />
     <ClCompile Include="JumpBottomLeft.cpp" />
     <ClCompile Include="JumpBottomRight.cpp" />
     <ClCompile Include="JumpTopLeft.cpp" />
     <ClCompile Include="JumpTopRight.cpp" />
+    <ClCompile Include="LivesDisplay.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Qbert.cpp" />
+    <ClCompile Include="QbertComponent.cpp" />
     <ClCompile Include="QbertSounds.cpp" />
+    <ClCompile Include="QbertSprite.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Minigin\ChangeTile.h" />
+    <ClInclude Include="BallAI.h" />
+    <ClInclude Include="ChangeTile.h" />
+    <ClInclude Include="Coily.h" />
+    <ClInclude Include="CoilyAI.h" />
     <ClInclude Include="CrossJump.h" />
+    <ClInclude Include="Die.h" />
     <ClInclude Include="JumpBottomLeft.h" />
     <ClInclude Include="JumpBottomRight.h" />
     <ClInclude Include="JumpTopLeft.h" />
     <ClInclude Include="JumpTopRight.h" />
+    <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="QbertComponent.h" />
     <ClInclude Include="QbertSounds.h" />
+    <ClInclude Include="QbertSprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

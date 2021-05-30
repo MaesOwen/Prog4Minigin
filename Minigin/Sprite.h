@@ -9,7 +9,7 @@ namespace dae
 {
 	class Texture2D;
 
-	class Sprite final : public dae::Component
+	class Sprite : public dae::Component
 	{
 	public:
 		enum class SpriteAlignment
@@ -36,10 +36,11 @@ namespace dae
 		void Render() const override;
 		void SetTexture(const std::string& filename);
 		void SetSpriteAlignment(SpriteAlignment spriteAlignment);
-		void AddFrame(Frame frame);
+		int AddFrame(Frame frame);
 		void NextFrame();
 		void PrevFrame();
 		void SetFrame(int frameNr);
+		void ClearFrames();
 		void SetTimePerFrame(float timePerFrame);
 		void Play();
 		void Stop();
@@ -47,12 +48,14 @@ namespace dae
 		int GetWidth() const;
 		int GetHeight() const;
 
+	protected:
+		int m_SpriteWidth;
+		int m_SpriteHeight;
+	
 	private:
 		std::shared_ptr<dae::Texture2D> m_pTexture;
 		std::vector<Frame> m_pFrames;
 		int m_CurrentFrame;
-		int m_SpriteWidth;
-		int m_SpriteHeight;
 		float m_ElapsedFrameTime;
 		float m_FrameTime;
 		bool m_IsPlaying;

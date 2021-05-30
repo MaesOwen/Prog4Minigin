@@ -5,7 +5,6 @@
 void dae::Component::SetOwner(std::shared_ptr<GameObject>& pOwner)
 {
 	m_pOwner = pOwner.get();
-	//m_pSharedOwner = pOwner;
 }
 
 void dae::Component::SetOwner(GameObject* pOwner)

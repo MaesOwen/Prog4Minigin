@@ -21,9 +21,6 @@
     <ClCompile Include="Qbert.cpp">
       <Filter>Main files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Minigin\ChangeTile.cpp">
-      <Filter>Commands</Filter>
-    </ClCompile>
     <ClCompile Include="Platform.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -45,11 +42,32 @@
     <ClCompile Include="QbertSounds.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="Coily.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="QbertSprite.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeTile.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
+    <ClCompile Include="QbertComponent.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
+    <ClCompile Include="Die.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
+    <ClCompile Include="LivesDisplay.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
+    <ClCompile Include="CoilyAI.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
+    <ClCompile Include="BallAI.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Minigin\ChangeTile.h">
-      <Filter>Commands</Filter>
-    </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Components</Filter>
     </ClInclude>
@@ -69,6 +87,30 @@
       <Filter>Commands</Filter>
     </ClInclude>
     <ClInclude Include="QbertSounds.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Coily.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSprite.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeTile.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Die.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="LivesDisplay.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CoilyAI.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BallAI.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

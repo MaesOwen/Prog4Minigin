@@ -4,8 +4,8 @@
 
 #include "AudioLocator.h"
 #include "GameObject.h"
-#include "Qbert.h"
 #include "Sprite.h"
+#include "QbertComponent.h"
 
 dae::ChangeTile::ChangeTile(const std::shared_ptr<GameObject>& pGameObject)
 	:Command(pGameObject)
@@ -14,7 +14,7 @@ dae::ChangeTile::ChangeTile(const std::shared_ptr<GameObject>& pGameObject)
 
 void dae::ChangeTile::execute()
 {
-	auto qbert = m_pGameObject->GetComponent<Qbert>();
+	auto qbert = m_pGameObject->GetComponent<QbertComponent>();
 
 	if (qbert)
 	{

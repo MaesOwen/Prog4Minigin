@@ -1,13 +1,12 @@
 // Qbert.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 #pragma once
-#include "Qbert.h"
+
 
 
 //#include <iostream>
 #include <iostream>
 #include <Minigin.h>
-
 #include <string>
 #include <vector>
 #include <memory>
@@ -20,7 +19,10 @@
 #include "TextComponent.h"
 
 #include "AudioLocator.h"
+#include "BallAI.h"
 #include "ChangeTile.h"
+#include "Coily.h"
+#include "CoilyAI.h"
 #include "CrossJump.h"
 #include "Die.h"
 #include "FPSComponent.h"
@@ -35,6 +37,8 @@
 #include "ScoreDisplay.h"
 #include "SDL2AudioSystem.h"
 #include "Sprite.h"
+#include "QbertComponent.h"
+#include "QbertSprite.h"
 
 using namespace dae;
 using namespace std;
@@ -124,20 +128,11 @@ void LoadGame()
 	qsc->SetQbertSound(QbertSounds::land, landQbertSoundId);
 	qbertGO->AddComponent(qsc);
 	
-	auto sc = std::make_shared<Sprite>(qbertWidth, qbertHeight);
-	sc->SetTexture("sprites.png");
-	sc->AddFrame({ 112,0,15,15 });
-	sc->AddFrame({ 96,0,15,15 });
-	sc->AddFrame({ 80,0,15,15 });
-	sc->AddFrame({ 64,0,15,15 });
-	sc->AddFrame({ 48,0,15,15 });
-	sc->AddFrame({ 32,0,15,15 });
-	sc->AddFrame({ 16,0,15,15 });
-	sc->AddFrame({ 0,0,15,15 });
-	sc->SetSpriteAlignment(Sprite::SpriteAlignment::botMiddle);
-	qbertGO->AddComponent(sc);
+	/*auto sc = std::make_shared<Sprite>(qbertWidth, qbertWidth);
 	
-	auto qb = make_shared<Qbert>();
+	qbertGO->AddComponent(sc);*/
+	
+	auto qb = make_shared<QbertComponent>(qbertWidth, qbertHeight);
 	qbertGO->AddComponent(qb);
 
 	auto cc = make_shared<CrossJump>();
@@ -172,6 +167,29 @@ void LoadGame()
 	scene.Add(qbertGO);
 	scene.Add(livesGO);
 	scene.Add(scoreGO);
+
+
+	//coily
+	int coilyWidth = 30;
+	int coilyHeight = 62;
+
+	auto coilyGO = make_shared<GameObject>();
+	auto coily = make_shared<Coily>(coilyWidth, coilyHeight);
+
+	auto jump = make_shared<CrossJump>();
+	jump->SetPlatformMap(hexGridGO);
+
+	coilyGO->AddComponent(coily);
+	coilyGO->AddComponent(jump);
+
+	coilyGO->GetTransformComponent()->SetPosition(float(beginPosX), float(beginPosY), 0);
+	coilyGO->GetComponent<BallAI>()->StartAI();
+	coilyGO->GetComponent<CoilyAI>()->SetTarget(qbertGO.get());
+
+	scene.Add(coilyGO);
+	
+	
+	
 	
 	
 	
@@ -181,6 +199,12 @@ void LoadGame()
 	InputManager::GetInstance().BindControl("TopRightJumpP1", "D", ControllerButton::ButtonB, make_shared<JumpTopRight>(qbertGO));
 	InputManager::GetInstance().BindControl("BottomLeftJumpP1", "A", ControllerButton::ButtonX, make_shared<JumpBottomLeft>(qbertGO));
 	InputManager::GetInstance().BindControl("BottomRightJumpP1", "S", ControllerButton::ButtonA, make_shared<JumpBottomRight>(qbertGO));
+
+	//input player2
+	InputManager::GetInstance().BindControl("TopLeftJumpP2", "I", ControllerButton::ButtonY, make_shared<JumpTopLeft>(coilyGO));
+	InputManager::GetInstance().BindControl("TopRightJumpP2", "L", ControllerButton::ButtonB, make_shared<JumpTopRight>(coilyGO));
+	InputManager::GetInstance().BindControl("BottomLeftJumpP2", "J", ControllerButton::ButtonX, make_shared<JumpBottomLeft>(coilyGO));
+	InputManager::GetInstance().BindControl("BottomRightJumpP2", "K", ControllerButton::ButtonA, make_shared<JumpBottomRight>(coilyGO));
 	
 	//InputManager::GetInstance().BindControl("PointsPlayer1", "W", ControllerButton::ButtonA, make_shared<Die>(qbertGO));
 	//InputManager::GetInstance().BindControl("DeadPlayer1", "S", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
@@ -234,7 +258,6 @@ std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, in
 			platformGO->SetPosition(posX, posY, 0.f);
 			scene.Add(platformGO);
 
-			platformGO->AddParent(hexGridGO);
 			hexGridGO->AddChild(platformGO);
 		}
 
