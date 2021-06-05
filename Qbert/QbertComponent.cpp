@@ -4,6 +4,8 @@
 #include "GameObject.h"
 #include "QbertObserver.h"
 #include "QbertSprite.h"
+#include "Renderer.h"
+#include "TransformComponent.h"
 
 
 void dae::QbertComponent::Update()
@@ -12,6 +14,7 @@ void dae::QbertComponent::Update()
 
 void dae::QbertComponent::Render() const
 {
+	
 }
 
 void dae::QbertComponent::SetOwner(GameObject* pOwner)
@@ -81,11 +84,6 @@ dae::QbertComponent::QbertComponent(int qbertWidth, int qbertHeight)
 	:m_QbertWidth(qbertWidth)
 ,m_QbertHeight(qbertHeight)
 {
-}
-
-dae::QbertComponent::~QbertComponent()
-{
-	printf("Destructor for Qbert:  this=%p\n", this); 
 }
 
 dae::QbertComponent::QbertComponent(const QbertComponent& other)

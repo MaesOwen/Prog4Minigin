@@ -9,6 +9,8 @@
 
 
 dae::GameObject::GameObject()
+	:m_Tag("Test")
+	,m_IsActive(true)
 {
 	AddComponent(std::make_shared<TransformComponent>());
 }
@@ -32,17 +34,24 @@ void dae::GameObject::MoveChildrenPosition(float x, float y, float z)
 
 void dae::GameObject::Update()
 {
-	for (auto& pComponent: m_pComponents)
+	if(m_IsActive)
 	{
-		pComponent->Update();
+		for (auto& pComponent : m_pComponents)
+		{
+			pComponent->Update();
+		}
 	}
+	
 }
 
 void dae::GameObject::Render() const
 {
-	for (auto& pComponent : m_pComponents)
+	if(m_IsActive)
 	{
-		pComponent->Render();
+		for (auto& pComponent : m_pComponents)
+		{
+			pComponent->Render();
+		}
 	}
 	
 }
@@ -78,6 +87,16 @@ void dae::GameObject::AddComponent(const std::shared_ptr<Component>& pComponent)
 {
 	pComponent->SetOwner(this);
 	m_pComponents.push_front(pComponent);	
+}
+
+void dae::GameObject::SetTag(const std::string& newTag)
+{
+	m_Tag = newTag;
+}
+
+const std::string& dae::GameObject::GetTag() const
+{
+	return m_Tag;
 }
 
 void dae::GameObject::AddParent(GameObject* pParentGO)
@@ -127,4 +146,21 @@ const int dae::GameObject::GetChildCount() const
 		childCount++;
 	}
 	return childCount;
+}
+
+bool dae::GameObject::GetIsActive() const
+{
+	return m_IsActive;
+}
+
+void dae::GameObject::SetIsActive(bool isActive)
+{
+	m_IsActive = isActive;
+	for(auto weakChildGO: m_pChildrenGOs)
+	{
+		if(auto sharedChildGO = weakChildGO.lock())
+		{
+			sharedChildGO->SetIsActive(isActive);
+		}
+	}
 }

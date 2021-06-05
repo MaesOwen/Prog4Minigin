@@ -193,6 +193,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="QbertComponent.cpp" />
     <ClCompile Include="QbertSounds.cpp" />
     <ClCompile Include="QbertSprite.cpp" />
+    <ClCompile Include="SpinningDisk.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BallAI.h" />
@@ -210,6 +211,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="QbertComponent.h" />
     <ClInclude Include="QbertSounds.h" />
     <ClInclude Include="QbertSprite.h" />
+    <ClInclude Include="SpinningDisk.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

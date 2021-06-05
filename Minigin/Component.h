@@ -25,6 +25,7 @@ namespace dae
 		GameObject* m_pOwner;
 	private:
 		//std::shared_ptr<GameObject> m_pSharedOwner;
+		
 	};
 
 }

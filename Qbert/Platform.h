@@ -24,11 +24,11 @@ namespace dae {
 		void Render() const override;
 		void JumpOn(std::shared_ptr<GameObject>& gameObject);
 		void JumpOn(GameObject* gameObject);
-		void JumpOff(std::shared_ptr<GameObject>& gameObject);
+		void JumpOff(GameObject* gameObject);
+		std::shared_ptr<GameObject> GetCurrentGOOnPlatform() const;
 		const PlatFormCoords& GetPlatFormCoords();
 		const glm::vec3& GetTopSidePos();
 		void SetTopSidePos(const float x, const float y, const float z);
-		std::vector<std::weak_ptr<GameObject>>& GetGameObjectsOnPlatform();
 		bool IsTargetColor() const;
 
 	private:
@@ -36,14 +36,14 @@ namespace dae {
 		int m_MaxNrOfColorChanges;
 		PlatFormCoords m_PlatformCoords;
 		bool m_DoesJumpingAgainReset;
-		std::vector<std::weak_ptr<GameObject>> m_pGameObjectsOnPlatform;
+		std::shared_ptr<GameObject> m_pCurrentGOOnPlatform;
 		glm::vec3 m_TopSidePos;
 		glm::vec3 m_LeftSidePos;
 		glm::vec3 m_RightSidePos;
 		bool m_AreSidesPosSet;
 		
+		void CheckIfQbertAndEnemiesCollide(GameObject* gameObject);
 		
-
 	};
 }
 

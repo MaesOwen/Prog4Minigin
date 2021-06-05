@@ -51,6 +51,8 @@ namespace dae
 	protected:
 		int m_SpriteWidth;
 		int m_SpriteHeight;
+
+		glm::vec3 ChangePosToAlignment(const glm::vec3 pos) const;
 	
 	private:
 		std::shared_ptr<dae::Texture2D> m_pTexture;
@@ -61,7 +63,7 @@ namespace dae
 		bool m_IsPlaying;
 		SpriteAlignment m_SpriteAlignment;
 
-		glm::vec3 ChangePosToAlignment(const glm::vec3 pos) const;
+		
 	};
 }
 

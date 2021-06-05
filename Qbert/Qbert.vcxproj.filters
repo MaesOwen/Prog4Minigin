@@ -66,6 +66,9 @@
     <ClCompile Include="BallAI.cpp">
       <Filter>Main files</Filter>
     </ClCompile>
+    <ClCompile Include="SpinningDisk.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Platform.h">
@@ -111,6 +114,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="BallAI.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SpinningDisk.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>

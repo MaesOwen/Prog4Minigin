@@ -17,7 +17,7 @@ namespace dae
 		int GetLives() const;
 
 		QbertComponent(int qbertWidth, int qbertHeight);
-		virtual ~QbertComponent();
+		virtual ~QbertComponent() = default;
 		QbertComponent(const QbertComponent& other);
 		QbertComponent(QbertComponent&& other) = delete;
 		QbertComponent& operator=(const QbertComponent& other) = delete;

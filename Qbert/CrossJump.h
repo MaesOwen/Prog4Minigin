@@ -21,9 +21,15 @@ public:
 	void Jump(DirCrossJump dirCrossJump);
 	void JumpColRow(int row, int col);
 	bool IsOnBottomPlatform() const;
+	void ResetPos();
+	void FallOfDisk();
+	const dae::Platform::PlatFormCoords& GetCurrentCoords() const;
+	dae::Platform::PlatFormCoords ConvertDirectionToCoords(DirCrossJump dirJump) const;
+	DirCrossJump ConvertCoordsToDirection(const dae::Platform::PlatFormCoords& coords);
 
 private:
 	bool m_IsJumping;
+	bool m_IsStuck;
 	bool m_IsJumpingUpwards;
 	bool m_IsGravityActive;
 	dae::Platform::PlatFormCoords m_CurrentCoords;
@@ -32,6 +38,9 @@ private:
 	glm::vec3 m_Gravity;
 	float m_JumpingHeight;
 	bool m_IsOnBottomPlatform;
+	bool m_IsJumpingOff;
+	float m_ElapsedTimeJumping;
+	float m_TimeJumpUntilDeath;
 
 	void JumpToPos(const glm::vec3& pos);
 	void LandOnPlatform();
@@ -39,4 +48,7 @@ private:
 	void ChangeSprite(DirCrossJump dirCrossJump);
 	bool CheckIfPlatformsAreComplete();
 	bool CheckIfOnBottomPlatform();
+	void CheckFallingTime();
+	void JumpOffLevelGrid(int row, int col);
+	bool CheckIfPlatformIsValid(std::shared_ptr<dae::Platform>& nextPlatform);
 };

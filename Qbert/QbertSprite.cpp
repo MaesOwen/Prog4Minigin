@@ -5,6 +5,14 @@
 #include "Renderer.h"
 
 
+void dae::QbertSprite::Render() const
+{
+	Sprite::Render();
+	auto pos = m_pOwner->GetTransformComponent()->GetPosition();
+	auto alignedPos = ChangePosToAlignment(pos);
+	Renderer::GetInstance().DrawRect({ int(alignedPos.x),int(alignedPos.y), m_SpriteWidth,m_SpriteHeight }, 255, 0, 0, 1);
+}
+
 dae::QbertSprite::QbertSprite(int spriteWidth, int spriteHeight)
 	:Sprite(spriteWidth, spriteHeight)
 	,m_BaseSpriteHeight(spriteHeight)

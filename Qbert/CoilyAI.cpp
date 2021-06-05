@@ -25,6 +25,7 @@ void dae::CoilyAI::Update()
 
 		if (m_ElapsedSeconds >= m_TimeBetweenAIDecisions)
 		{
+			m_ElapsedSeconds -= m_TimeBetweenAIDecisions;
 			MoveTowardsTarget();
 		}
 	}
@@ -41,7 +42,7 @@ void dae::CoilyAI::SetTarget(GameObject* target)
 
 void dae::CoilyAI::SetActiveAI(bool isActive)
 {
-	if(isActive)
+	if (isActive)
 	{
 		auto crossJump = m_pOwner->GetComponent<CrossJump>();
 		if (crossJump)
@@ -49,41 +50,38 @@ void dae::CoilyAI::SetActiveAI(bool isActive)
 			m_pCrossJump = crossJump.get();
 			m_IsActiveAI = isActive;
 		}
-			
-	}else
+
+	}
+	else
 	{
 		m_IsActiveAI = isActive;
 	}
-	
+
 }
 
 void dae::CoilyAI::MoveTowardsTarget()
 {
-	auto pos = m_pOwner->GetTransformComponent()->GetPosition();
-	auto targetPos = m_pTarget->GetTransformComponent()->GetPosition();
-
-	auto dir = targetPos - pos;
-
-	if(dir.x > 0)
+	auto targetCrossjump = m_pTarget->GetComponent<CrossJump>();
+	if (targetCrossjump)
 	{
-		if(dir.y > 0)
-		{
-			m_pCrossJump->Jump(CrossJump::DirCrossJump::bottomRight);
-		}else
-		{
-			m_pCrossJump->Jump(CrossJump::DirCrossJump::topRight);
-		}
-	}else
-	{
-		if (dir.y > 0)
-		{
-			m_pCrossJump->Jump(CrossJump::DirCrossJump::bottomLeft);
-		}
-		else
-		{
-			m_pCrossJump->Jump(CrossJump::DirCrossJump::topLeft);
-		}
+		auto targetCoords = targetCrossjump->GetCurrentCoords();
+		auto coords = m_pCrossJump->GetCurrentCoords();
+
+		int row = targetCoords.row - coords.row;
+		int col = targetCoords.col - coords.col;
+
+		if (row == 0)
+			row -= 1;
+		if (col == 0)
+			col += 1;
+
+		row = row / abs(row);
+		col = col / abs(col);
+
+		std::cout << "jump row: " << row << ", col: " << col << std::endl;
+
+		m_pCrossJump->JumpColRow(row, col);
 	}
 
-	
+
 }

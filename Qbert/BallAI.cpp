@@ -12,7 +12,7 @@ dae::BallAI::BallAI()
 	,m_TimeBetweenAIDecisions(1)
 	,m_ElapsedSeconds(0)
 {
-	srand(time(NULL));
+	srand(unsigned(time(NULL)));
 }
 
 void dae::BallAI::Update()
@@ -26,9 +26,12 @@ void dae::BallAI::Update()
 			if (m_pCrossJump->IsOnBottomPlatform())
 			{
 				BottomReached();
+			}else
+			{
+				JumpRandomDirectionDownwards();
 			}
 			
-			JumpRandomDirectionDownwards();
+			
 		}
 	}
 }

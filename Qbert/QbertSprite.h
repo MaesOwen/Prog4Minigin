@@ -14,7 +14,7 @@ namespace dae
 			topLeftLand, topRightLand, botLeftLand, botRightLand,
 			ballLand, ballJump
 		};
-		
+		void Render() const override;
 		
 		QbertSprite(int spriteWidth, int spriteHeight);
 		void UseSpritePose(SpritePose spritePose);

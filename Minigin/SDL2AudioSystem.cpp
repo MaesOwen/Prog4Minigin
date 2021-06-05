@@ -7,7 +7,7 @@
 
 void dae::SDL2AudioSystem::Play(int id, float volumePereantage)
 {
-	std::cout << "Try to play " << id << ", volume: " << volumePereantage << std::endl;
+	//std::cout << "Try to play " << id << ", volume: " << volumePereantage << std::endl;
 	std::lock_guard<std::mutex> lock{ m_Mutex };
 	m_SoundQueue.push(SoundToPlay{ m_LoadedSounds.find(id)->second , volumePereantage });
 	m_isPlaying.store(true);
@@ -42,8 +42,8 @@ void dae::SDL2AudioSystem::Update()
 			m_SoundQueue.pop();
 			if (!m_IsMuted)
 			{
-				playSound(soundToPlay.fileName.c_str(), int(SDL_MIX_MAXVOLUME * soundToPlay.volumePercentage)); //linked error from initAudio
-				std::cout << "Play sound with path: " << soundToPlay.fileName << " at volume " << SDL_MIX_MAXVOLUME * soundToPlay.volumePercentage << std::endl;
+				playSound(soundToPlay.fileName.c_str(), int(SDL_MIX_MAXVOLUME * soundToPlay.volumePercentage));
+				//std::cout << "Play sound with path: " << soundToPlay.fileName << " at volume " << SDL_MIX_MAXVOLUME * soundToPlay.volumePercentage << std::endl;
 			}
 		}
 	}

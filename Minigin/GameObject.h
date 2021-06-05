@@ -20,11 +20,14 @@ namespace dae
 		void SetPosition(const glm::vec3& pos);
 		std::shared_ptr<TransformComponent> GetTransformComponent() const;
 		void AddComponent(const std::shared_ptr<Component>& pComponent);
-		
+		void SetTag(const std::string& newTag);
+		const std::string& GetTag() const;
 		void AddChild(std::shared_ptr<GameObject>& childGO);
 		std::vector<std::weak_ptr<GameObject>>& GetChildren();
 		GameObject* GetParent();
 		const int GetChildCount() const;
+		bool GetIsActive() const;
+		void SetIsActive(bool isActive);
 		
 		
 		template <typename T>
@@ -66,6 +69,8 @@ namespace dae
 		std::deque<std::shared_ptr<Component>> m_pComponents;
 		GameObject* m_pParentGO;
 		std::vector<std::weak_ptr<GameObject>> m_pChildrenGOs;
+		std::string m_Tag;
+		bool m_IsActive;
 
 		void MoveChildrenPosition(float x, float y, float z);
 		void AddParent(GameObject* pParentGO);
