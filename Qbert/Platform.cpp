@@ -8,6 +8,7 @@
 #include "QbertComponent.h"
 #include "QbertSounds.h"
 #include "Renderer.h"
+#include "SlickAndSam.h"
 #include "SpinningDisk.h"
 #include "Sprite.h"
 #include "TransformComponent.h"
@@ -106,14 +107,13 @@ void dae::Platform::JumpOn(std::shared_ptr<GameObject>& gameobject)
 
 
 	//check if changing colors
-	auto qbert = gameobject->GetComponent<QbertComponent>();
-	if (qbert)
+
+
+	auto sprite = GetOwner()->GetComponent<Sprite>();
+	if (sprite)
 	{
-
-		auto sprite = GetOwner()->GetComponent<Sprite>();
-		if (sprite)
+		if (auto qbert = gameobject->GetComponent<QbertComponent>())
 		{
-
 			if (m_DoesJumpingAgainReset)
 			{
 				if (m_CurrNrOfColorChanges + 1 <= m_MaxNrOfColorChanges)
@@ -134,24 +134,18 @@ void dae::Platform::JumpOn(std::shared_ptr<GameObject>& gameobject)
 					m_CurrNrOfColorChanges++;
 				}
 			}
-			sprite->SetFrame(m_CurrNrOfColorChanges);
+		}
+		else if (auto slickAndSam = gameobject->GetComponent<SlickAndSam>())
+		{
+			if (m_CurrNrOfColorChanges > 0)
+			{
+				m_CurrNrOfColorChanges--;
+			}
 		}
 
 
+		sprite->SetFrame(m_CurrNrOfColorChanges);
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 void dae::Platform::JumpOn(GameObject* gameObject)

@@ -7,8 +7,8 @@
 #include "CoilyAI.h"
 #include "GameObject.h"
 #include "QbertSprite.h"
-#include "Renderer.h"
-#include "TransformComponent.h"
+#include "QbertObserver.h"
+
 
 dae::Coily::Coily(int coilyWidth, int coilyHeight)
 	:m_CoilyWidth(coilyWidth)
@@ -23,6 +23,18 @@ void dae::Coily::Render() const
 }
 
 void dae::Coily::Update()
+{
+}
+
+void dae::Coily::Die()
+{
+	for (std::shared_ptr<QbertObserver> pObserver : m_pObservers)
+	{
+		pObserver->Died(QbertObserver::EnemyThatDied::Coily);
+	}
+}
+
+void dae::Coily::ChangeTile()
 {
 }
 

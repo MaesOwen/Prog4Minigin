@@ -23,14 +23,29 @@ void dae::ScoreDisplay::Render() const
 {
 }
 
-void dae::ScoreDisplay::Died()
+void dae::ScoreDisplay::Died(QbertObserver::EnemyThatDied enemyThatDied)
 {
+	switch (enemyThatDied)
+	{
+	case EnemyThatDied::Coily:
+		m_Score += 500;
+		break;
+	case EnemyThatDied::SlickOrSam:
+		m_Score += 300;
+		break;
+	case EnemyThatDied::Qbert:
+		break;
+	}
+	if (m_pText)
+	{
+		m_pText->SetText("Score: " + std::to_string(m_Score));
+	}
 }
 
 void dae::ScoreDisplay::ChangeTile()
 {
 	m_Score += 25;
-	if(m_pText)
+	if (m_pText)
 	{
 		m_pText->SetText("Score: " + std::to_string(m_Score));
 	}

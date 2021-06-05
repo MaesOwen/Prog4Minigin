@@ -22,7 +22,7 @@ public:
 	void JumpColRow(int row, int col);
 	bool IsOnBottomPlatform() const;
 	void ResetPos();
-	void FallOfDisk();
+	void Fall();
 	const dae::Platform::PlatFormCoords& GetCurrentCoords() const;
 	dae::Platform::PlatFormCoords ConvertDirectionToCoords(DirCrossJump dirJump) const;
 	DirCrossJump ConvertCoordsToDirection(const dae::Platform::PlatFormCoords& coords);

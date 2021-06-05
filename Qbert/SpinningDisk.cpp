@@ -105,7 +105,7 @@ void dae::SpinningDisk::StopSpinningDisk()
 	m_IsMoving = false;
 	auto jump = m_pSpinningDiskUser->GetComponent<CrossJump>();
 	if (jump)
-		jump->FallOfDisk();
+		jump->Fall();
 	
 	m_pOwner->SetIsActive(false);
 }

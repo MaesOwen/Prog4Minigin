@@ -39,6 +39,7 @@
 #include "Sprite.h"
 #include "QbertComponent.h"
 #include "QbertSprite.h"
+#include "SlickAndSam.h"
 #include "SpinningDisk.h"
 
 using namespace dae;
@@ -157,6 +158,7 @@ void LoadGame()
 
 	auto cc = make_shared<CrossJump>();
 	cc->SetPlatformMap(hexGridGO);
+	//cc->SetSpawn({0,0});
 	qbertGO->AddComponent(cc);
 	cc->ResetPos();
 	qbertGO->GetTransformComponent()->SetPosition(float(beginPosX), float(beginPosY), 0);
@@ -196,10 +198,9 @@ void LoadGame()
 
 	auto coilyGO = make_shared<GameObject>();
 	coilyGO->SetTag("Enemy");
-	//coilyGO->SetIsActive(false);
+	coilyGO->SetIsActive(false);
 	auto coily = make_shared<Coily>(coilyWidth, coilyHeight);
-
-	std::cout << coilyGO->GetTag() << std::endl;
+	coily->AddObserver(sd);
 
 	auto jump = make_shared<CrossJump>();
 	jump->SetPlatformMap(hexGridGO);
@@ -213,6 +214,41 @@ void LoadGame()
 
 	level.Add(coilyGO);
 
+
+	//slick
+	auto slickGO = make_shared<GameObject>();
+	auto slick = make_shared<SlickAndSam>(qbertWidth, qbertHeight, true);
+	auto jumpSlick = make_shared<CrossJump>();
+	jumpSlick->SetPlatformMap(hexGridGO);
+	auto ballAI = std::make_shared<BallAI>();
+	//slickGO->SetIsActive(false);
+
+	slickGO->AddComponent(slick);
+	slickGO->AddComponent(jumpSlick);
+	slickGO->AddComponent(ballAI);
+	
+	slickGO->GetTransformComponent()->SetPosition(float(beginPosX), float(beginPosY), 0);
+	ballAI->StartAI();
+	
+	level.Add(slickGO);
+
+	//sam
+	auto samGO = make_shared<GameObject>();
+	auto sam = make_shared<SlickAndSam>(qbertWidth, qbertHeight, false);
+	auto jumpsam = make_shared<CrossJump>();
+	jumpsam->SetPlatformMap(hexGridGO);
+	ballAI = std::make_shared<BallAI>();
+	//samGO->SetIsActive(false);
+
+	samGO->AddComponent(sam);
+	samGO->AddComponent(jumpsam);
+	samGO->AddComponent(ballAI);
+
+	samGO->GetTransformComponent()->SetPosition(float(beginPosX), float(beginPosY), 0);
+	ballAI->StartAI();
+
+	level.Add(samGO);
+	
 
 
 
@@ -246,7 +282,7 @@ void LoadGame()
 
 std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, int platformWidth, int platformHeight, dae::Scene& scene)
 {
-	srand(time(NULL));
+	srand(unsigned(time(NULL)));
 	auto hexGridGO = make_shared<GameObject>();
 	int nrOfBlocksPerRow = 1;
 	int maxRows = 7;

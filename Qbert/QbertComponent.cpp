@@ -51,7 +51,7 @@ void dae::QbertComponent::Die()
 	}
 	for (std::shared_ptr<QbertObserver> pObserver: m_pObservers)
 	{
-		pObserver->Died();
+		pObserver->Died(QbertObserver::EnemyThatDied::Qbert);
 	}
 	
 }
@@ -64,16 +64,16 @@ void dae::QbertComponent::ChangeTile()
 	}
 }
 
-void dae::QbertComponent::AddObserver(const std::shared_ptr<QbertObserver>& pObserver)
-{
-	m_pObservers.push_back(pObserver);
-	
-}
-
-void dae::QbertComponent::RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver)
-{
-	m_pObservers.erase(std::remove(m_pObservers.begin(), m_pObservers.end(), pObserver), m_pObservers.end());
-}
+//void dae::QbertComponent::AddObserver(const std::shared_ptr<QbertObserver>& pObserver)
+//{
+//	m_pObservers.push_back(pObserver);
+//	
+//}
+//
+//void dae::QbertComponent::RemoveObserver(const std::shared_ptr<QbertObserver>& pObserver)
+//{
+//	m_pObservers.erase(std::remove(m_pObservers.begin(), m_pObservers.end(), pObserver), m_pObservers.end());
+//}
 
 int dae::QbertComponent::GetLives() const
 {

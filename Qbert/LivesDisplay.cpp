@@ -26,7 +26,7 @@ void dae::LivesDisplay::Render() const
 {
 }
 
-void dae::LivesDisplay::Died()
+void dae::LivesDisplay::Died(EnemyThatDied enemyThatDied)
 {
 	if (m_pPlayer.lock())
 	{

@@ -129,9 +129,6 @@
     <ClInclude Include="Sprite.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="Subject.h">
-      <Filter>Observers</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MiniginPCH.cpp">

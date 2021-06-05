@@ -15,7 +15,7 @@ namespace dae
 		LivesDisplay(const std::shared_ptr<GameObject>& pGameObject);
 		void Update() override;
 		void Render() const override;
-		void Died() override;
+		void Died(EnemyThatDied enemyThatDied) override;
 		void ChangeTile() override;
 		void SetQbert(const std::shared_ptr<QbertComponent> pQbert);
 		void SetQbert(const std::weak_ptr<QbertComponent> pQbert);

@@ -88,6 +88,10 @@ void dae::BallAI::BottomReached()
 		coilySprite->SetIsBall(false);
 		coilyAI->SetActiveAI(true);
 	}
+	else
+	{
+		JumpRandomDirectionDownwards();
+	}
 		
 
 }

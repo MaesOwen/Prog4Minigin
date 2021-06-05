@@ -22,6 +22,7 @@ CrossJump::CrossJump()
 	,m_TimeJumpUntilDeath(1)
 	,m_IsStuck()
 {
+	Fall();
 }
 
 void CrossJump::Update()
@@ -139,8 +140,9 @@ void CrossJump::ResetPos()
 
 }
 
-void CrossJump::FallOfDisk()
+void CrossJump::Fall()
 {
+	//todo: set to respawn row and coll
 	m_CurrentCoords.row = 0;
 	m_CurrentCoords.col = 0;
 	m_Velocity.x = 0;
@@ -368,13 +370,14 @@ void CrossJump::CheckFallingTime()
 		if (m_ElapsedTimeJumping > m_TimeJumpUntilDeath)
 		{
 			m_ElapsedTimeJumping = 0;
-
+			//todo: die component
 			if (auto qbert = m_pOwner->GetComponent<dae::QbertComponent>())
 			{
 				qbert->Die();
 			}
 			else if (auto coily = m_pOwner->GetComponent<dae::Coily>())
 			{
+				coily->Die();
 				m_pOwner->SetIsActive(false);
 			}
 			

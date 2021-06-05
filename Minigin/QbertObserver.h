@@ -7,7 +7,8 @@ namespace dae
 	class QbertObserver
 	{
 	public:
-		virtual void Died() = 0;
+		enum class EnemyThatDied { Coily, SlickOrSam, Qbert};
+		virtual void Died(EnemyThatDied enemyThatDied) = 0;
 		virtual void ChangeTile() = 0;
 
 		QbertObserver() = default;

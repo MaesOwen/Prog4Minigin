@@ -69,6 +69,12 @@
     <ClCompile Include="SpinningDisk.cpp">
       <Filter>Main files</Filter>
     </ClCompile>
+    <ClCompile Include="QbertSubject.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
+    <ClCompile Include="SlickAndSam.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Platform.h">
@@ -117,6 +123,12 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="SpinningDisk.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertSubject.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="SlickAndSam.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
