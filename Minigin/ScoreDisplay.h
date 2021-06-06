@@ -12,7 +12,8 @@ namespace dae
 		ScoreDisplay(const std::shared_ptr<GameObject>& pGameObject);
 		void Update() override;
 		void Render() const override;
-		void Died(QbertObserver::EnemyThatDied enemyThatDied) override;
+		void Died(EnemyThatDied enemyThatDied) override;
+		void FellOff(EnemyThatDied enemyThatDied) override;
 		void ChangeTile() override;
 
 		virtual ~ScoreDisplay() = default;

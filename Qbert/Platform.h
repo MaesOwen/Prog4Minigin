@@ -19,7 +19,7 @@ namespace dae {
 
 		};
 
-		Platform(PlatFormCoords platform, int maxNrOfColorChanges, bool doesJumpingAgainReset = false);
+		Platform(PlatFormCoords platform, int maxNrOfColorChanges, bool doesJumpingAgainReset = false, bool isSpinningDisk = false);
 		void Update() override;
 		void Render() const override;
 		void JumpOn(std::shared_ptr<GameObject>& gameObject);
@@ -30,6 +30,7 @@ namespace dae {
 		const glm::vec3& GetTopSidePos();
 		void SetTopSidePos(const float x, const float y, const float z);
 		bool IsTargetColor() const;
+		bool IsSpinningDisk() const;
 
 	private:
 		int m_CurrNrOfColorChanges;
@@ -41,6 +42,7 @@ namespace dae {
 		glm::vec3 m_LeftSidePos;
 		glm::vec3 m_RightSidePos;
 		bool m_AreSidesPosSet;
+		bool m_IsSpinningDisk;
 		
 		void CheckIfQbertAndEnemiesCollide(GameObject* gameObject);
 		

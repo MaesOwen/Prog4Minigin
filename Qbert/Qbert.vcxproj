@@ -191,6 +191,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Qbert.cpp" />
     <ClCompile Include="QbertComponent.cpp" />
+    <ClCompile Include="QbertGamemode.cpp" />
     <ClCompile Include="QbertSounds.cpp" />
     <ClCompile Include="QbertSprite.cpp" />
     <ClCompile Include="QbertSubject.cpp" />
@@ -211,6 +212,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\$(PlatformTarget)\*.dll" "$(OutputPat
     <ClInclude Include="LivesDisplay.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="QbertComponent.h" />
+    <ClInclude Include="QbertGamemode.h" />
     <ClInclude Include="QbertSounds.h" />
     <ClInclude Include="QbertSprite.h" />
     <ClInclude Include="QbertSubject.h" />

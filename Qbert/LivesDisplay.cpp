@@ -36,6 +36,10 @@ void dae::LivesDisplay::Died(EnemyThatDied enemyThatDied)
 	
 }
 
+void dae::LivesDisplay::FellOff(EnemyThatDied enemyThatDied)
+{
+}
+
 void dae::LivesDisplay::ChangeTile()
 {
 }

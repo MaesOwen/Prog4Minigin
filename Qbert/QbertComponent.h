@@ -12,6 +12,7 @@ namespace dae
 		void Render() const override;
 		void SetOwner(GameObject* pOwner) override;
 		void Die() override;
+		void FallOff() override;
 		void ChangeTile() override;
 		int GetLives() const;
 

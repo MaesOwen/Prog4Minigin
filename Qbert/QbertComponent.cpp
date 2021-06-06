@@ -56,6 +56,18 @@ void dae::QbertComponent::Die()
 	
 }
 
+void dae::QbertComponent::FallOff()
+{
+	if (m_Lives > 0)
+	{
+		m_Lives--;
+	}
+	for (std::shared_ptr<QbertObserver> pObserver : m_pObservers)
+	{
+		pObserver->FellOff(QbertObserver::EnemyThatDied::Qbert);
+	}
+}
+
 void dae::QbertComponent::ChangeTile()
 {
 	for (std::shared_ptr<QbertObserver> pObserver : m_pObservers)

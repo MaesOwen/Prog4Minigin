@@ -8,6 +8,7 @@ namespace dae {
 	{
 	public:
 		virtual void Die() = 0;
+		virtual void FallOff() = 0;
 		virtual void ChangeTile() = 0;
 		virtual void AddObserver(const std::shared_ptr<QbertObserver>& pObserver);
 		virtual void RemoveObserver(const std::shared_ptr<dae::QbertObserver>& pObserver);

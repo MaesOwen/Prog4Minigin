@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "QbertComponent.h"
 #include "QbertSprite.h"
+#include "SlickAndSam.h"
 #include "SpinningDisk.h"
 #include "TransformComponent.h"
 
@@ -271,7 +272,7 @@ void CrossJump::LandOnPlatform()
 
 
 	//todo: delete
-	for (auto pair : m_PlatformMap)
+	/*for (auto pair : m_PlatformMap)
 	{
 		auto spindisk = pair.second->GetOwner()->GetComponent<dae::SpinningDisk>();
 		if (spindisk)
@@ -290,7 +291,7 @@ void CrossJump::LandOnPlatform()
 				std::cout << "Platform (" << pair.first.row << ", " << pair.first.col << "): Coily" << std::endl;
 		}
 
-	}
+	}*/
 
 }
 
@@ -378,7 +379,9 @@ void CrossJump::CheckFallingTime()
 			else if (auto coily = m_pOwner->GetComponent<dae::Coily>())
 			{
 				coily->Die();
-				m_pOwner->SetIsActive(false);
+			}else if(auto slickAndSam = m_pOwner->GetComponent<dae::SlickAndSam>())
+			{
+				slickAndSam->Die();
 			}
 			
 			ResetPos();

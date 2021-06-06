@@ -38,6 +38,7 @@
 #include "SDL2AudioSystem.h"
 #include "Sprite.h"
 #include "QbertComponent.h"
+#include "QbertGamemode.h"
 #include "QbertSprite.h"
 #include "SlickAndSam.h"
 #include "SpinningDisk.h"
@@ -72,7 +73,6 @@ void LoadGame()
 
 	auto& startscreen = SceneManager::GetInstance().CreateScene("StartScreen");
 	auto& level = SceneManager::GetInstance().CreateScene("Level");
-	auto& level2 = SceneManager::GetInstance().CreateScene("Level2");
 	
 	int beginPosX = 320; //middle of screen
 	int beginPosY = 100;
@@ -96,7 +96,7 @@ void LoadGame()
 	versusGO->AddComponent(textVS);
 	startscreen.Add(versusGO);
 
-	//Singleplayer
+	//Level
 	auto go = std::make_shared<GameObject>();
 	auto rc = std::make_shared<RenderComponent>();
 	go->AddComponent(rc);
@@ -138,6 +138,11 @@ void LoadGame()
 	int platformWidth = 64;
 	int platformHeight = 48;
 
+
+	//LevelReader singleton
+	//made in the hexGridGo -> rows, first level
+	// rows, color, colorchanges, hasCoily, hasSlick, HasSam
+	//hexGridGO = LevelReader->MakeLevelLayout(Scene scene, 
 	auto hexGridGO = CreateLevelPlatform(beginPosX, beginPosY, platformWidth, platformHeight, level);
 
 
@@ -250,9 +255,19 @@ void LoadGame()
 	level.Add(samGO);
 	
 
+	//gamemode
+	auto gamemodeGO = make_shared<GameObject>();
+	auto gameMode = make_shared<QbertGamemode>(QbertGamemode::Gamemode::Singleplayer
+		, hexGridGO.get(), qbertGO.get(), nullptr, coilyGO.get(), slickGO.get(), samGO.get());
 
+	gamemodeGO->AddComponent(gameMode);
+	qb->AddObserver(gameMode);
+	coily->AddObserver(gameMode);
+	slick->AddObserver(gameMode);
+	sam->AddObserver(gameMode);
+	
 
-
+	level.Add(gamemodeGO);
 
 
 	//input player1
@@ -267,8 +282,6 @@ void LoadGame()
 	InputManager::GetInstance().BindControl("BottomLeftJumpP2", "J", ControllerButton::ButtonX, make_shared<JumpBottomLeft>(coilyGO));
 	InputManager::GetInstance().BindControl("BottomRightJumpP2", "K", ControllerButton::ButtonA, make_shared<JumpBottomRight>(coilyGO));
 
-	//InputManager::GetInstance().BindControl("PointsPlayer1", "W", ControllerButton::ButtonA, make_shared<Die>(qbertGO));
-	//InputManager::GetInstance().BindControl("DeadPlayer1", "S", ControllerButton::ButtonB, make_shared<ChangeTile>(qbertGO));
 
 
 
@@ -336,7 +349,7 @@ std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, in
 	auto spinningDiskGO = std::make_shared<GameObject>();
 	auto spinningDiskComp = std::make_shared<SpinningDisk>(platformWidth / 2, platformHeight / 2);
 	spinningDiskGO->AddComponent(spinningDiskComp);
-	auto platform = std::make_shared<Platform>(Platform::PlatFormCoords{ randRow - 1, col }, 1);
+	auto platform = std::make_shared<Platform>(Platform::PlatFormCoords{ randRow - 1, col }, 1, false, true);
 	float topSidePosY = posY - float(platformWidth / 5);
 	platform->SetTopSidePos(posX, topSidePosY, 0);
 	spinningDiskGO->AddComponent(platform);
@@ -352,7 +365,7 @@ std::shared_ptr<GameObject> CreateLevelPlatform(int beginPosX, int beginPosY, in
 	spinningDiskGO = std::make_shared<GameObject>();
 	spinningDiskComp = std::make_shared<SpinningDisk>(platformWidth / 2, platformHeight / 2);
 	spinningDiskGO->AddComponent(spinningDiskComp);
-	platform = std::make_shared<Platform>(Platform::PlatFormCoords{ randRow - 1, col }, 1);
+	platform = std::make_shared<Platform>(Platform::PlatFormCoords{ randRow - 1, col }, 1, false, true);
 	topSidePosY = posY - float(platformWidth / 5);
 	platform->SetTopSidePos(posX, topSidePosY, 0);
 	spinningDiskGO->AddComponent(platform);

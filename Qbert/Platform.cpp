@@ -14,13 +14,14 @@
 #include "TransformComponent.h"
 
 
-dae::Platform::Platform(PlatFormCoords platform, int maxNrOfColorChanges, bool doesJumpingAgainReset)
+dae::Platform::Platform(PlatFormCoords platform, int maxNrOfColorChanges, bool doesJumpingAgainReset, bool isSpinningDisk)
 	:m_PlatformCoords(platform)
 	, m_MaxNrOfColorChanges(maxNrOfColorChanges)
 	, m_CurrNrOfColorChanges(0)
 	, m_DoesJumpingAgainReset(doesJumpingAgainReset)
 	, m_AreSidesPosSet(false)
 	, m_TopSidePos{}
+	,m_IsSpinningDisk(isSpinningDisk)
 {
 
 }
@@ -65,6 +66,11 @@ bool dae::Platform::IsTargetColor() const
 	return m_CurrNrOfColorChanges == m_MaxNrOfColorChanges;
 }
 
+bool dae::Platform::IsSpinningDisk() const
+{
+	return m_IsSpinningDisk;
+}
+
 void dae::Platform::CheckIfQbertAndEnemiesCollide(GameObject* gameObject)
 {
 
@@ -76,10 +82,12 @@ void dae::Platform::CheckIfQbertAndEnemiesCollide(GameObject* gameObject)
 			auto coily = m_pCurrentGOOnPlatform->GetComponent<Coily>();
 			if (coily)
 				qbert->Die();
+
+			if (auto slickOrSam = m_pCurrentGOOnPlatform->GetComponent<SlickAndSam>())
+				slickOrSam->Die();
 		}
-		else
+		else if(auto coily = gameObject->GetComponent<Coily>())
 		{
-			auto coily = gameObject->GetComponent<Coily>();
 			if (coily)
 			{
 				auto qbert = m_pCurrentGOOnPlatform->GetComponent<QbertComponent>();

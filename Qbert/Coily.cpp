@@ -34,6 +34,14 @@ void dae::Coily::Die()
 	}
 }
 
+void dae::Coily::FallOff()
+{
+	for (std::shared_ptr<QbertObserver> pObserver : m_pObservers)
+	{
+		pObserver->FellOff(QbertObserver::EnemyThatDied::Coily);
+	}
+}
+
 void dae::Coily::ChangeTile()
 {
 }

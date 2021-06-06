@@ -4,6 +4,7 @@
 #include "BallAI.h"
 #include "GameObject.h"
 #include "QbertSprite.h"
+#include "QbertObserver.h"
 
 dae::SlickAndSam::SlickAndSam(int slickWidth, int slickHeight, bool isSlick)
 	:m_SlickAndSamWidth(slickWidth)
@@ -25,6 +26,30 @@ void dae::SlickAndSam::SetOwner(dae::GameObject* pOwner)
 	m_pOwner = pOwner;
 
 	CheckForSpriteComponent();
+}
+
+void dae::SlickAndSam::Die()
+{
+	for (std::shared_ptr<QbertObserver> pObserver : m_pObservers)
+	{
+		if(m_IsSlick)
+		{
+			pObserver->Died(QbertObserver::EnemyThatDied::Slick);
+		}else
+		{
+			pObserver->Died(QbertObserver::EnemyThatDied::Sam);
+		}
+		
+	}
+}
+
+void dae::SlickAndSam::FallOff()
+{
+	
+}
+
+void dae::SlickAndSam::ChangeTile()
+{
 }
 
 void dae::SlickAndSam::CheckForSpriteComponent()

@@ -75,6 +75,9 @@
     <ClCompile Include="SlickAndSam.cpp">
       <Filter>Main files</Filter>
     </ClCompile>
+    <ClCompile Include="QbertGamemode.cpp">
+      <Filter>Main files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Platform.h">
@@ -129,6 +132,9 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="SlickAndSam.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="QbertGamemode.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
